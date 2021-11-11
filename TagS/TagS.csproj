@@ -7,13 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationInterface\Abstractions\" />
-    <Folder Include="ApplicationInterface\Extensions\" />
     <Folder Include="ApplicationInterface\Configurations\" />
+    <Folder Include="EventBus\Events\" />
+    <Folder Include="EventBus\EventHandlers\" />
     <Folder Include="Implementation\" />
-    <Folder Include="Infrastructure\" />
-    <Folder Include="DependencyInjection\" />
-    <Folder Include="EventBus\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
   </ItemGroup>
 
 </Project>
