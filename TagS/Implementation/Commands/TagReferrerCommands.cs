@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Infrastructure.Queries
+namespace TagS.Implementation.Commands
 {
-    internal class TagQueries:IQueries
+    internal class TagReferrerCommands<TPersistence> : ICommands<TPersistence>
     {
-        
     }
 }

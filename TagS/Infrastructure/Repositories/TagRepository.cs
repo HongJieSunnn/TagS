@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Repositories
+namespace TagS.Infrastructure.Repositories
 {
-    internal class TagReferrerRepository
+    internal class TagRepository
     {
     }
 }

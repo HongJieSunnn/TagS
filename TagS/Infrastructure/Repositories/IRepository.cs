@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Infrastructure.Queries
+namespace TagS.Infrastructure.Repositories
 {
-    internal class TagReferrerQueries:IQueries
+    internal interface IRepository
     {
     }
 }

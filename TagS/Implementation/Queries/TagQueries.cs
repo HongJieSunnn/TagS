@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Repositories
+namespace TagS.Implementation.Queries
 {
-    internal interface IRepository
+    internal class TagQueries:IQueries
     {
+        
     }
 }
