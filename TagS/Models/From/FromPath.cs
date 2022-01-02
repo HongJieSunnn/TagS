@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Implementation.EventHandlers.TagRaisedEventHandlers
+namespace TagS.Models.From
 {
-    internal class TagUpdatedEventHandler
+    internal class FromPath
     {
     }
 }

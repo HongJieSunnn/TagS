@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TagS.Implementation.Commands;
-using TagS.Implementation.Commands.TagCommands;
 using TagS.Infrastructure.Repositories.Abstractions;
 
 namespace TagS.ApplicationInterface.TagManager
@@ -17,91 +15,116 @@ namespace TagS.ApplicationInterface.TagManager
     /// </summary>
     internal class TagManager<TPersistence> : ITagManager<TPersistence>
     {
-        private readonly IMediator _mediator;
-        public TagManager(IMediator mediator)
+        private readonly ITagRepository<TPersistence> _tagRepository;
+        public TagManager(ITagRepository<TPersistence> tagRepository)
         {
-            _mediator =  mediator;
+            _tagRepository = tagRepository;
         }
 
-        public async Task<bool> AddNextTagAsync(Tag tag, string nextTag)
+        public Task AddTagAsync(Tag tag)
         {
-            tag.NextTags.Add(nextTag);
-            var updateTagCommand=new UpdateTagCommand<TPersistence>(tag);
-            var statue=await _mediator.Send(updateTagCommand);
-            return statue;
+            if (_tagRepository.Existed(tag.PreferredTagName))
+                throw new ArgumentException($"Tag with PreferredTagName{tag.PreferredTagName} has already existed.");
+
+            return _tagRepository.AddAsync(tag);
         }
 
-        public async Task<bool> AddNextTagsAsync(Tag tag, IEnumerable<string> nextTags)
+        public async Task AddNextTagAsync(Guid tagGuid, Guid nextTagGuid)
         {
-            tag.NextTags.UnionWith(nextTags);
-            var updateTagCommand = new UpdateTagCommand<TPersistence>(tag);
-            var statue = await _mediator.Send(updateTagCommand);
-            return statue;
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
+            if(!_tagRepository.Existed(nextTagGuid))
+                throw new ArgumentException($"NextTag with Guid{nextTagGuid} is not existed");
+
+            var tag=await _tagRepository.GetTagByGuidAsync(tagGuid);
+            tag.NextTags.Add(nextTagGuid);
+            await _tagRepository.UpdateAsync(tag);
         }
 
-        public async Task<bool> AddExitedReferrerToTagAsync(Tag tag, ObjectId ReferrerId)
+        public async Task AddNextTagsAsync(Guid tagGuid, IEnumerable<Guid> nextTagGuids)
         {
-            var addReferrerToTagCommand=new ReferrerAddedTagEvent<TPersistence>(tag, ReferrerId);
-            return await _mediator.Send(addReferrerToTagCommand);
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
+            if (!_tagRepository.Existed(nextTagGuids))
+                throw new ArgumentException($"There is at least one tag is not existed whose guid is in param nextTagGuids");
+
+            var tag = await _tagRepository.GetTagByGuidAsync(tagGuid);
+            tag.NextTags.Union(nextTagGuids);//TODO:maybe there should be foreach(nexttag in ...) tag.NextTags.Add(nexttag)
+            await _tagRepository.UpdateAsync(tag);
         }
 
-        public async Task<bool> AddExitedReferrerToTagAsync(Tag tag, IEnumerable<ObjectId> ReferrerId)
+        public async Task AddRelatedTagToTagAsync(Guid tagGuid, Guid relatedTag)
         {
-            var addReferrerToTagCommand = new ReferrerAddedTagEvent<TPersistence>(tag, ReferrerId);
-            return await _mediator.Send(addReferrerToTagCommand);
-        }
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
+            if (!_tagRepository.Existed(relatedTag))
+                throw new ArgumentException($"NextTag with Guid{relatedTag} is not existed");
 
-        public async Task<bool> AddRelatedTagToTagAsync(Tag tag, string relatedTag)
-        {
+            var tag =await _tagRepository.GetTagByGuidAsync(tagGuid);
             tag.RelatedTags.Add(relatedTag);
-            var updateCommand = new UpdateTagCommand<TPersistence>(tag);
-            return await _mediator.Send(updateCommand);
+            await _tagRepository.UpdateAsync(tag);
         }
 
-        public async Task<bool> AddRelatedTagsToTagAsync(Tag tag, IEnumerable<string> relatedTag)
+        public async Task AddRelatedTagsToTagAsync(Guid tagGuid, IEnumerable<Guid> relatedTags)
         {
-            tag.RelatedTags.UnionWith(relatedTag);
-            var updateCommand=new UpdateTagCommand<TPersistence>(tag);
-            return await _mediator.Send(updateCommand);
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
+            if (!_tagRepository.Existed(relatedTags))
+                throw new ArgumentException($"There is at least one tag is not existed whose guid is in param nextTagGuids");
+
+            var tag = await _tagRepository.GetTagByGuidAsync(tagGuid);
+            tag.RelatedTags.Union(relatedTags);
+            await _tagRepository.UpdateAsync(tag);
         }
 
-        public async Task<bool> AddSynonymToTagAsync(Tag tag, string synonym)
+        public async Task AddSynonymToTagAsync(Guid tagGuid, string synonym)
         {
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
+
+            var tag = await _tagRepository.GetTagByGuidAsync(tagGuid);
             tag.Synonyms.Add(synonym);
-            var updateCommand=new UpdateTagCommand<TPersistence>(tag);
-            return await _mediator.Send(updateCommand);
+            await _tagRepository.UpdateAsync(tag);
         }
 
-        public async Task<bool> AddSynonymsToTagAsync(Tag tag, IEnumerable<string> synonym)
+        public async Task AddSynonymsToTagAsync(Guid tagGuid, IEnumerable<string> synonyms)
         {
-            tag.Synonyms.UnionWith(synonym);
-            var updateCommand = new UpdateTagCommand<TPersistence>(tag);
-            return await _mediator.Send(updateCommand);
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
+
+            var tag = await _tagRepository.GetTagByGuidAsync(tagGuid);
+            tag.Synonyms.Union(synonyms);
+            await _tagRepository.UpdateAsync(tag);
         }
 
-        public async Task<bool> AddTagAsync(Tag tag)
+        public async Task ChangePreferredTagNameAsync(Guid tagGuid, string preferredTagName)
         {
-            var addTagCommand=new AddTagCommand<TPersistence>(tag);
-            return await _mediator.Send(addTagCommand);
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
+            if (_tagRepository.Existed(preferredTagName))
+                throw new ArgumentException($"Tag with PreferredTagName{preferredTagName} has already existed");
+
+            var tag =await _tagRepository.GetTagByGuidAsync(tagGuid);
+            tag.PreferredTagName=preferredTagName;
+            await _tagRepository.UpdateAsync(tag);
         }
 
-        public async Task<bool> ChangePreferredTagNameAsync(Tag tag, string preferredTagName)
+        public async Task ChangeTagDetailAsync(Guid tagGuid, string tagDetail)
         {
-            var changePreferredTagNameCommand=new ChangePreferredTagNameCommand<TPersistence>(tag, preferredTagName);
-            return await _mediator.Send(changePreferredTagNameCommand);
-        }
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
 
-        public async Task<bool> ChangeTagDetailAsync(Tag tag, string tagDetail)
-        {
+            var tag = await _tagRepository.GetTagByGuidAsync(tagGuid);
             tag.TagDetail = tagDetail;
-            var updateCommand=new UpdateTagCommand<TPersistence>(tag);
-            return await _mediator.Send(updateCommand);
+            await _tagRepository.UpdateAsync(tag);
         }
 
-        public async Task<bool> RemoveTagAsync(Tag tag)
+        public Task DeleteTagAsync(Guid tagGuid)
         {
-            var removeCommand=new RemoveTagCommand<TPersistence>(tag);
-            return await _mediator.Send(removeCommand);
+            if (!_tagRepository.Existed(tagGuid))
+                throw new ArgumentException($"Tag with Guid{tagGuid} is not existed");
+
+            return _tagRepository.DeleteAsync(tagGuid);
         }
     }
 }

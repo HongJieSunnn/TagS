@@ -10,30 +10,19 @@ namespace TagS.ApplicationInterface.TagManager
 {
     public interface ITagManager<TPersistence>
     {
-        Task<bool> AddTagAsync(Tag tag);
+        Task AddTagAsync(Tag tag);
 
-        Task<bool> AddSynonymToTagAsync(Tag tag,string synonym);
-        Task<bool> AddSynonymsToTagAsync(Tag tag,IEnumerable<string> synonym);
+        //Update methods
+        Task AddSynonymToTagAsync(Guid tagGuid,string synonym);
+        Task AddSynonymsToTagAsync(Guid tagGuid, IEnumerable<string> synonyms);
+        Task AddRelatedTagToTagAsync(Guid tagGuid, Guid relatedTag);
+        Task AddRelatedTagsToTagAsync(Guid tagGuid, IEnumerable<Guid> relatedTags);
+        Task AddNextTagAsync(Guid tagGuid, Guid nextTagGuid);
+        Task AddNextTagsAsync(Guid tagGuid, IEnumerable<Guid> nextTagGuids);
+        Task ChangePreferredTagNameAsync(Guid tagGuid, string preferredTagName);
+        Task ChangeTagDetailAsync(Guid tagGuid, string tagDetail);
 
-        Task<bool> AddRelatedTagToTagAsync(Tag tag,string relatedTag);
-        Task<bool> AddRelatedTagsToTagAsync(Tag tag,IEnumerable<string> relatedTag);
-
-        /// <summary>
-        /// Generally,referrer should be added by Tagable.But TagManager should have that power to do this action.
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="ReferrerId"></param>
-        /// <returns></returns>
-        Task<bool> AddExitedReferrerToTagAsync(Tag tag, ObjectId ReferrerId);
-        Task<bool> AddExitedReferrerToTagAsync(Tag tag, IEnumerable<ObjectId> ReferrerId);
-
-        Task<bool> AddNextTagAsync(Tag tag,string nextTag);
-        Task<bool> AddNextTagsAsync(Tag tag,IEnumerable<string> nextTags);
-
-        Task<bool> ChangePreferredTagNameAsync(Tag tag,string preferredTagName);
-
-        Task<bool> ChangeTagDetailAsync(Tag tag, string tagDetail);
-
-        Task<bool> RemoveTagAsync(Tag tag);
+        //Delete methods
+        Task DeleteTagAsync(Guid tagGuid);
     }
 }

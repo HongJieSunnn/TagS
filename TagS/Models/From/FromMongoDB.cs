@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Implementation.EventHandlers.TagReferrerRaisedEventHandlers
+namespace TagS.Models.From
 {
-    internal class ReferrerAddedTagEventHandler
+    public class FromMongoDB : From
     {
+        
     }
 }

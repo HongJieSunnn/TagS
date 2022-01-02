@@ -6,82 +6,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagS.Infrastructure.Contexts.MongoDB;
 using TagS.Infrastructure.Repositories.Abstractions;
-using TagS.Models.Referrers.Generic;
+using TagS.Models.Referrers.Abstractions;
+using MongoDB.Driver;
 
 namespace TagS.Infrastructure.Repositories.MongoDBRepositories
 {
-    internal class MongoDBTagReferrerRepository<TPersistence> :ITagReferrerRepository<TPersistence>
+    internal class MongoDBTagReferrerRepository<TReferrerId> : ITagReferrerRepository<TReferrerId, TagReferrerMongoDBContext<TReferrerId>>
+        where TReferrerId : IEquatable<TReferrerId>
     {
-        private readonly MongoDBContextBase _context;
-        public MongoDBTagReferrerRepository(MongoDBContextBase mongoDBContext)
+        private readonly TagReferrerMongoDBContext<TReferrerId> _tagReferrerMongoDBContext;
+        public MongoDBTagReferrerRepository(TagReferrerMongoDBContext<TReferrerId> tagReferrerMongoDBContext)
         {
-            _context = mongoDBContext;
+            _tagReferrerMongoDBContext=tagReferrerMongoDBContext;
         }
 
-        public void Add<TReferrerId>(IReferrer<TReferrerId> referrer) where TReferrerId : IEquatable<TReferrerId>
+        public bool Existed(Guid referrerGuid)
         {
-            throw new NotImplementedException();
+            var referrer=_tagReferrerMongoDBContext.Referrers.FindSync(r=>r.Guid== referrerGuid).FirstOrDefault();
+            return referrer!=null;
         }
 
-        public Task AddAsync<TReferrerId>(IReferrer<TReferrerId> referrer) where TReferrerId : IEquatable<TReferrerId>
+        public bool Existed(IEnumerable<Guid> referrerGuids)
         {
-            throw new NotImplementedException();
+            var referrerCount = _tagReferrerMongoDBContext.Referrers.FindSync(r => referrerGuids.Contains(r.Guid)).ToList().Count;
+            return referrerCount == referrerGuids.Count();
         }
 
-        public int AddTag<TReferrerId>(IReferrer<TReferrerId> referrer, Tag tag) where TReferrerId : IEquatable<TReferrerId>
+        public bool Existed(IReferrer<TReferrerId> referrer)
         {
-            throw new NotImplementedException();
+            if (referrer.Guid == Guid.Empty)
+                return false;
+            return Existed(referrer.Guid);
         }
 
-        public Task<int> AddTagAsync<TReferrerId>(IReferrer<TReferrerId> referrer, Tag tag) where TReferrerId : IEquatable<TReferrerId>
+        public IReferrer<TReferrerId> GetReferrerByGuid(Guid referrerGuid)
         {
-            throw new NotImplementedException();
+            var referrer = _tagReferrerMongoDBContext.Referrers.FindSync(r => r.Guid == referrerGuid).FirstOrDefault();
+            return referrer;
         }
 
-        public void Delete<TReferrerId>(IReferrer<TReferrerId> referrer) where TReferrerId : IEquatable<TReferrerId>
+        public IReferrer<TReferrerId> GetReferrerByReferrerId(TReferrerId referrerId)
         {
-            throw new NotImplementedException();
+            var referrer = _tagReferrerMongoDBContext.Referrers.FindSync(r => r.ReferrerId.Equals(referrerId)).FirstOrDefault();
+            return referrer;
         }
 
-        public Task DeleteAsync<TReferrerId>(IReferrer<TReferrerId> referrer) where TReferrerId : IEquatable<TReferrerId>
+        public async Task<IReferrer<TReferrerId>> GetReferrerByReferrerIdAsync(TReferrerId referrerId)
         {
-            throw new NotImplementedException();
+            var referrer = await _tagReferrerMongoDBContext.Referrers.FindAsync(r => r.ReferrerId.Equals(referrerId));
+            return referrer.FirstOrDefault();
         }
 
-        public bool Existed<TReferrerId>(IReferrer<TReferrerId> referrer) where TReferrerId : IEquatable<TReferrerId>
+        public async Task<IReferrer<TReferrerId>> GetReferrerByGuidAsync(Guid referrerGuid)
         {
-            throw new NotImplementedException();
+            var referrer = await _tagReferrerMongoDBContext.Referrers.FindAsync(r => r.Guid.Equals(referrerGuid));
+            return referrer.FirstOrDefault();
         }
 
-        public bool Existed(ObjectId referrer)
+        public async Task AddAsync(IReferrer<TReferrerId> referrer)
         {
-            throw new NotImplementedException();
+            await _tagReferrerMongoDBContext.Referrers.InsertOneAsync(referrer);
         }
 
-        public bool Existed(IEnumerable<ObjectId> referrers)
+        public async Task UpdateAsync(IReferrer<TReferrerId> referrer)
         {
-            throw new NotImplementedException();
+            await _tagReferrerMongoDBContext.Referrers.UpdateOneAsync(r => r.Guid == referrer.Guid, referrer.ToBsonDocument());
         }
 
-        public int RemoveTag<TReferrerId>(IReferrer<TReferrerId> referrer, Tag tag) where TReferrerId : IEquatable<TReferrerId>
+        public async Task DeleteAsync(IReferrer<TReferrerId> referrer)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> RemoveTagAsync<TReferrerId>(IReferrer<TReferrerId> referrer, Tag tag) where TReferrerId : IEquatable<TReferrerId>
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Update<TReferrerId>(IReferrer<TReferrerId> referrer) where TReferrerId : IEquatable<TReferrerId>
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> UpdateAsync<TReferrerId>(IReferrer<TReferrerId> referrer) where TReferrerId : IEquatable<TReferrerId>
-        {
-            throw new NotImplementedException();
+            await _tagReferrerMongoDBContext.Referrers.FindOneAndDeleteAsync(r => r.Guid == referrer.Guid);
         }
     }
 }

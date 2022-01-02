@@ -5,24 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TagS.Models.Referrers.Generic;
+using TagS.Models.Referrers.Abstractions;
 
 namespace TagS.Infrastructure.Repositories.Abstractions
 {
-    internal interface ITagReferrerRepository<TPersistence>
+    internal interface ITagReferrerRepository<TReferrerId,TPersistence>
+        where TReferrerId : IEquatable<TReferrerId>
     {
-        bool Existed<TReferrerId>(IReferrer<TReferrerId> referrer)  where TReferrerId : IEquatable<TReferrerId>;
-        bool Existed(ObjectId referrer);
-        bool Existed(IEnumerable<ObjectId> referrers);
-        void Add<TReferrerId>(IReferrer<TReferrerId> referrer)  where TReferrerId : IEquatable<TReferrerId>;
-        int Update<TReferrerId>(IReferrer<TReferrerId> referrer)  where TReferrerId : IEquatable<TReferrerId>;
-        void Delete<TReferrerId>(IReferrer<TReferrerId> referrer)  where TReferrerId : IEquatable<TReferrerId>;
-        int AddTag<TReferrerId>(IReferrer<TReferrerId> referrer, Tag tag)  where TReferrerId : IEquatable<TReferrerId>;
-        int RemoveTag<TReferrerId>(IReferrer<TReferrerId> referrer, Tag tag)  where TReferrerId : IEquatable<TReferrerId>;
-        Task AddAsync<TReferrerId>(IReferrer<TReferrerId> referrer)  where TReferrerId : IEquatable<TReferrerId>;
-        Task<int> UpdateAsync<TReferrerId>(IReferrer<TReferrerId> referrer)  where TReferrerId : IEquatable<TReferrerId>;
-        Task DeleteAsync<TReferrerId>(IReferrer<TReferrerId> referrer)  where TReferrerId : IEquatable<TReferrerId>;
-        Task<int> AddTagAsync<TReferrerId>(IReferrer<TReferrerId> referrer, Tag tag)  where TReferrerId : IEquatable<TReferrerId>;
-        Task<int> RemoveTagAsync<TReferrerId>(IReferrer<TReferrerId> referrer, Tag tag)  where TReferrerId : IEquatable<TReferrerId>;
+        bool Existed(IReferrer<TReferrerId> referrer);
+        bool Existed(Guid referrerGuid);
+        bool Existed(IEnumerable<Guid> referrerGuids);
+        IReferrer<TReferrerId> GetReferrerByGuid(Guid referrerGuid);
+        IReferrer<TReferrerId> GetReferrerByReferrerId(TReferrerId referrerId);
+        Task<IReferrer<TReferrerId>> GetReferrerByGuidAsync(Guid referrerGuid);
+        Task<IReferrer<TReferrerId>> GetReferrerByReferrerIdAsync(TReferrerId referrerId);
+        Task AddAsync(IReferrer<TReferrerId> referrer);
+        Task UpdateAsync(IReferrer<TReferrerId> referrer);
+        Task DeleteAsync(IReferrer<TReferrerId> referrer);
     }
 }

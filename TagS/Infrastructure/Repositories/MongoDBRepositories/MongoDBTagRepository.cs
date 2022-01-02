@@ -1,4 +1,4 @@
-﻿using HongJieSun.TagS.Models.Tags;
+﻿using Tag= HongJieSun.TagS.Models.Tags.Tag;
 using Innermost.MongoDBContext;
 using MongoDB.Bson;
 using System;
@@ -6,62 +6,97 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagS.Infrastructure.Persistences.MongoDB;
 using TagS.Infrastructure.Repositories.Abstractions;
-using TagS.Models.Referrers.Generic;
+using TagS.Models.Referrers.Abstractions;
+using MongoDB.Driver;
 
 namespace TagS.Infrastructure.Repositories.MongoDBRepositories
 {
-    internal class MongoDBTagRepository<TPersistence>:ITagRepository<TPersistence>
+    internal class MongoDBTagRepository : ITagRepository<TagMongoDBContext>
     {
-        private readonly MongoDBContextBase _context;
-        public MongoDBTagRepository(MongoDBContextBase mongoDBContext)
+        private readonly TagMongoDBContext _tagMongoDBContext;
+        public MongoDBTagRepository(TagMongoDBContext tagMongoDBContext)
         {
-            _context = mongoDBContext;
-        }
-
-        public void Add(Tag tag)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AddAsync(Tag tag)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddReferrer(Tag tag, ObjectId referrerObjectId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AddReferrerAsync(Tag tag, ObjectId referrerObjectId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Tag tag)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(Tag tag)
-        {
-            throw new NotImplementedException();
+            _tagMongoDBContext = tagMongoDBContext;
         }
 
         public bool Existed(Tag tag)
         {
-            throw new NotImplementedException();
+            var tagToFind = _tagMongoDBContext.Tags.FindSync(t=>t.Guid == tag.Guid||t.PreferredTagName==tag.PreferredTagName);
+            return tagToFind != null;
         }
 
-        public void Update(Tag tag)
+        public bool Existed(Guid tagGuid)
         {
-            throw new NotImplementedException();
+            var tagToFind = _tagMongoDBContext.Tags.FindSync(t => t.Guid == tagGuid);
+            return tagToFind != null;
         }
 
-        public Task UpdateAsync(Tag tag)
+        public bool Existed(IEnumerable<Guid> tagGuids)
         {
-            throw new NotImplementedException();
+            var tagCount = _tagMongoDBContext.Tags.FindSync(t => tagGuids.Contains(t.Guid)).ToList().Count;
+            return tagCount==tagGuids.Count();
+        }
+
+        public bool Existed(string preferredTagName)
+        {
+            var tagToFind = _tagMongoDBContext.Tags.FindSync(t => t.PreferredTagName == preferredTagName);
+            return tagToFind != null;
+        }
+
+        public async Task<Tag> GetTagByGuidAsync(Guid tagGuid)
+        {
+            var tags = await _tagMongoDBContext.Tags.FindAsync(t => t.Guid == tagGuid);
+            return tags.FirstOrDefault();
+        }
+
+        public async Task<Tag> GetTagByPreferredNameAsync(string preferredName)
+        {
+            var tags = await _tagMongoDBContext.Tags.FindAsync(t => t.PreferredTagName == preferredName);
+            return tags.FirstOrDefault();
+        }
+
+        public async Task AddAsync(Tag tag)
+        {
+            await _tagMongoDBContext.Tags.InsertOneAsync(tag);
+        }
+
+        public async Task UpdateAsync(Tag tag)
+        {
+            await _tagMongoDBContext.Tags.UpdateOneAsync(t=>t.Guid==tag.Guid,tag.ToBsonDocument());
+        }
+
+
+        public async Task AddReferrerAsync(Guid tagGuid, Guid referrerGuid)
+        {
+            var tags = await _tagMongoDBContext.Tags.FindAsync(t => t.Guid == tagGuid);
+            var tag = tags.FirstOrDefault();
+
+            tag.Referrers.Add(referrerGuid);//HashSet itself is Deduplicated.
+
+            await _tagMongoDBContext.Tags.UpdateOneAsync(t=>t.Guid == tagGuid,tag.ToBsonDocument());
+        }
+
+        public async Task RemoveReferrerAsync(Guid tagGuid, Guid referrerGuid)
+        {
+            var tags = await _tagMongoDBContext.Tags.FindAsync(t => t.Guid == tagGuid);
+            var tag = tags.FirstOrDefault();
+
+            if(tag.Referrers.Contains(referrerGuid))
+                tag.Referrers.Remove(referrerGuid);//HashSet itself is Deduplicated.
+
+            await _tagMongoDBContext.Tags.UpdateOneAsync(t => t.Guid == tagGuid, tag.ToBsonDocument());
+        }
+
+        public async Task DeleteAsync(Tag tag)
+        {
+            await _tagMongoDBContext.Tags.FindOneAndDeleteAsync(t => t.Guid == tag.Guid || t.PreferredTagName == tag.PreferredTagName);
+        }
+
+        public async Task DeleteAsync(Guid tagGuid)
+        {
+            await _tagMongoDBContext.Tags.FindOneAndDeleteAsync(t => t.Guid == tagGuid);
         }
     }
 }

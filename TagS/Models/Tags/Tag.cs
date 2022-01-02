@@ -6,32 +6,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagS.Models.Referrers;
-using TagS.Models.Referrers.Generic;
+using TagS.Models.Referrers.Abstractions;
 
 namespace HongJieSun.TagS.Models.Tags
 {
     public class Tag
     {
-        public string PreferredTagName { get; set; }
+        public Guid Guid{ get; set; }//if use sql,context generate a shadow primary key.
+        public string PreferredTagName { get; set; }//unique
         public string TagDetail { get; set; }
-        public string PreviousTag { get; set; }
+        public Guid PreviousTagId { get; set; }
         public HashSet<string> Synonyms { get; set; }
-        public HashSet<string> RelatedTags { get; set; }
-        public HashSet<string> NextTags { get; set; }
-        public HashSet<ObjectId> Referrers { get; set; }
+        public HashSet<Guid> RelatedTags { get; set; }
+        public HashSet<Guid> NextTags { get; set; }
+        public HashSet<Guid> Referrers { get; set; }
 
         protected Tag()
         {
             Synonyms=new HashSet<string>();
-            RelatedTags=new HashSet<string>();
-            Referrers=new HashSet<ObjectId>();
+            RelatedTags=new HashSet<Guid>();
+            Referrers=new HashSet<Guid>();
         }
 
-        public Tag([NotNull]string preferredTagName, string tagDetail,string previousTag, HashSet<string> synonyms, HashSet<string> relatedTags,HashSet<string> nextTags, HashSet<ObjectId> referrers):this()
+        public Tag(Guid guid,[NotNull]string preferredTagName, string tagDetail, Guid previousTagId, HashSet<string> synonyms, HashSet<Guid> relatedTags,HashSet<Guid> nextTags, HashSet<Guid> referrers):this()
         {
+            Guid = guid;
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
-            PreviousTag = previousTag;
+            PreviousTagId = previousTagId;
             Synonyms = synonyms;
             RelatedTags = relatedTags;
             NextTags = nextTags;
