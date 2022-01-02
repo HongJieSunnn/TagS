@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Infrastructure.Configurations
+namespace TagS.Implementation.EventHandlers.TagRaisedEventHandlers
 {
-    public class MongoDBConfiguration
+    internal class TagAddedExitedReferrerEventHandler
     {
     }
 }

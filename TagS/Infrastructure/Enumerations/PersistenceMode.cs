@@ -12,7 +12,7 @@ namespace TagS.Infrastructure.Enumerations
     public class PersistenceMode
     {
         private PersistenceMode() { }
-        public static PersistenceModeConfiguration<MongoDBConfiguration> MongoDB = new PersistenceModeConfiguration<MongoDBConfiguration>("MongoDB");
+        //public static PersistenceModeConfiguration<MongoDBConfiguration> MongoDB = new PersistenceModeConfiguration<MongoDBConfiguration>("MongoDB");
         public static PersistenceModeConfiguration<DbContextOptions> SQLDatabase = new PersistenceModeConfiguration<DbContextOptions>("SQLDatabase");
         public static PersistenceModeConfiguration<FilePersistenceConfiguration> File = new PersistenceModeConfiguration<FilePersistenceConfiguration>("File");
     }

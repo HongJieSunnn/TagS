@@ -11,7 +11,10 @@ namespace TagS.Infrastructure.Enumerations.Generic
     public class PersistenceModeConfiguration<TOptions>
     {
         public string ModeName { get; init; }
-        public TOptions Options { get; private set; }
+        /// <summary>
+        /// if Options is not null.We should configure Persistence by Options or we will get Persistence instance from aspnetcore.
+        /// </summary>
+        public TOptions? Options { get; private set; }
         protected PersistenceModeConfiguration()
         {
         }
@@ -24,12 +27,6 @@ namespace TagS.Infrastructure.Enumerations.Generic
         public PersistenceModeConfiguration<TOptions> WithOptions(TOptions options)
         {
             Options = options;
-            return this;
-        }
-
-        public PersistenceModeConfiguration<TOptions> WithOptions(Action<TOptions> action)
-        {
-            action(this.Options);
             return this;
         }
     }

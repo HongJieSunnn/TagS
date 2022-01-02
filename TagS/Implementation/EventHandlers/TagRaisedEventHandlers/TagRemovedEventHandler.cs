@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Models.Referrers
+namespace TagS.Implementation.EventHandlers.TagRaisedEventHandlers
 {
-    public interface IReferrer
+    internal class TagRemovedEventHandler
     {
     }
 }

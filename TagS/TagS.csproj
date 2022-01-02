@@ -8,17 +8,26 @@
 
   <ItemGroup>
     <Folder Include="ApplicationInterface\Configurations\" />
-    <Folder Include="EventBus\Events\" />
-    <Folder Include="EventBus\EventHandlers\" />
-    <Folder Include="Implementation\" />
+    <Folder Include="ApplicationInterface\Extensions\" />
+    <Folder Include="ApplicationInterface\Factories\" />
+    <Folder Include="ApplicationInterface\Builders\" />
+    <Folder Include="Infrastructure\Configurations\Abstractions\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Innermost.IdempotentCommand">
+      <HintPath>..\..\Innermost.IdempotentCommand\Innermost.IdempotentCommand\bin\Debug\net6.0\Innermost.IdempotentCommand.dll</HintPath>
+    </Reference>
+    <Reference Include="Innermost.MongoDBContext">
+      <HintPath>..\..\Innermost.MongoDBContext\Innermost.MongoDBContext\bin\Debug\net6.0\Innermost.MongoDBContext.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TagS.Models.Generic;
-using TagS.Models.Referrers;
 
-namespace HongJieSun.TagS.Models
+namespace TagS.Implementation.EventHandlers.TagRaisedEventHandlers
 {
-    public class Tag:Tag<EntityReferrer>
+    internal class TagUpdatedEventHandler
     {
-
     }
 }

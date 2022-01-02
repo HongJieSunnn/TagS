@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Infrastructure.Repositories
+namespace TagS.Implementation.EventHandlers.TagReferrerRaisedEventHandlers
 {
-    internal class TagReferrerRepository
+    internal class ReferrerAddedTagEventHandler
     {
     }
 }

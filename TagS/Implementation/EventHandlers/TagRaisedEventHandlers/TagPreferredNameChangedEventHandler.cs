@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Implementation.Commands
+namespace TagS.Implementation.EventHandlers.TagRaisedEventHandlers
 {
-    internal class TagReferrerCommands<TPersistence> : ICommands<TPersistence>
+    internal class TagPreferredNameChangedEventHandler
     {
     }
 }
