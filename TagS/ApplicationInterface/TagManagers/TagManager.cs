@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TagS.Infrastructure.Repositories.Abstractions;
 
-namespace TagS.ApplicationInterface.TagManager
+namespace TagS.ApplicationInterface.TagManagers
 {
     /// <summary>
     /// TagManager is to manage just tags.
     /// </summary>
-    internal class TagManager<TPersistence> : ITagManager<TPersistence>
+    public class TagManager : ITagManager
     {
-        private readonly ITagRepository<TPersistence> _tagRepository;
-        public TagManager(ITagRepository<TPersistence> tagRepository)
+        private readonly ITagRepository _tagRepository;
+        public TagManager(ITagRepository tagRepository)
         {
             _tagRepository = tagRepository;
         }
@@ -25,6 +25,8 @@ namespace TagS.ApplicationInterface.TagManager
         {
             if (_tagRepository.Existed(tag.PreferredTagName))
                 throw new ArgumentException($"Tag with PreferredTagName{tag.PreferredTagName} has already existed.");
+            if(_tagRepository.IsSynonymOfExistedTag(tag.PreferredTagName))
+                throw new ArgumentException($"Tag with PreferredTagName{tag.PreferredTagName} is a synonym of other tags.Please use those tag.");
 
             return _tagRepository.AddAsync(tag);
         }

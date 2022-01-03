@@ -13,13 +13,14 @@ namespace HongJieSun.TagS.Models.Tags
     public class Tag
     {
         public Guid Guid{ get; set; }//if use sql,context generate a shadow primary key.
-        public string PreferredTagName { get; set; }//unique
+        public string PreferredTagName { get; set; }//unique name should be like Emotion:Happy,ProgramingLanguage:C#:C#10
         public string TagDetail { get; set; }
         public Guid PreviousTagId { get; set; }
         public HashSet<string> Synonyms { get; set; }
         public HashSet<Guid> RelatedTags { get; set; }
         public HashSet<Guid> NextTags { get; set; }
         public HashSet<Guid> Referrers { get; set; }
+        //TODO: add navigation properites with BsonIgnore?Or use TagViewModel to get completed tag info.
 
         protected Tag()
         {

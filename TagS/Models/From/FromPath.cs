@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TagS.Models.From
 {
-    internal class FromPath
+    internal class FromPath : From
     {
+        public override string FromTypeName => nameof(FromPath);
+        public string Path { get; set; }
     }
 }

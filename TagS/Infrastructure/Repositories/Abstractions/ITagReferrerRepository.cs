@@ -9,7 +9,7 @@ using TagS.Models.Referrers.Abstractions;
 
 namespace TagS.Infrastructure.Repositories.Abstractions
 {
-    internal interface ITagReferrerRepository<TReferrerId,TPersistence>
+    public interface ITagReferrerRepository<TReferrerId>
         where TReferrerId : IEquatable<TReferrerId>
     {
         bool Existed(IReferrer<TReferrerId> referrer);

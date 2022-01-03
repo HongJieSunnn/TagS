@@ -13,12 +13,18 @@ using MongoDB.Driver;
 
 namespace TagS.Infrastructure.Repositories.MongoDBRepositories
 {
-    internal class MongoDBTagRepository : ITagRepository<TagMongoDBContext>
+    public class MongoDBTagRepository : ITagRepository
     {
         private readonly TagMongoDBContext _tagMongoDBContext;
         public MongoDBTagRepository(TagMongoDBContext tagMongoDBContext)
         {
             _tagMongoDBContext = tagMongoDBContext;
+        }
+
+        public bool IsSynonymOfExistedTag(string synonym)
+        {
+            var tagToFind = _tagMongoDBContext.Tags.FindSync(t => t.Synonyms.Contains(synonym)).ToList();
+            return tagToFind.Any();
         }
 
         public bool Existed(Tag tag)

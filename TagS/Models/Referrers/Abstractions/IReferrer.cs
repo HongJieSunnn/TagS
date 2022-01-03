@@ -13,8 +13,10 @@ namespace TagS.Models.Referrers.Abstractions
     {
         public Guid Guid { get; set; }//Each time call ToReferrer can not get same guid but ReferrerId is same generate by one tagable instance.
         TReferrerId ReferrerId { get; init; }//Unique 
+        string TagableTypeJson { get;set; }//To deserialize to TagableType
+        string FromType { get;set; }//To deserialize to FromType and to execute queries.
         string FromJson { get; set; }//Json Serializes by FromType(e:FromSQL).
-        List<TagIdentityModel> Tags { get; set; }
+        List<TagIdentityModel> Tags { get; set; }//Tag must be existed.Whaterver add referrer or update referrer,tag can not be added by referrer.
     }
 
     public class TagIdentityModel

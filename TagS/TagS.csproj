@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationInterface\Configurations\" />
+    <Folder Include="ApplicationInterface\Enumerations\" />
     <Folder Include="ApplicationInterface\Extensions\" />
     <Folder Include="ApplicationInterface\Factories\" />
-    <Folder Include="ApplicationInterface\Builders\" />
-    <Folder Include="Infrastructure\Configurations\Abstractions\" />
+    <Folder Include="DependencyInjections\" />
+    <Folder Include="Implementation\" />
+    <Folder Include="Infrastructure\Enumerations\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,9 @@
     </Reference>
     <Reference Include="Innermost.MongoDBContext">
       <HintPath>..\..\Innermost.MongoDBContext\Innermost.MongoDBContext\bin\Debug\net6.0\Innermost.MongoDBContext.dll</HintPath>
+    </Reference>
+    <Reference Include="Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection">
+      <HintPath>..\..\Innermost.MongoDBContext\Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection\bin\Debug\net6.0\Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection.dll</HintPath>
     </Reference>
   </ItemGroup>
 

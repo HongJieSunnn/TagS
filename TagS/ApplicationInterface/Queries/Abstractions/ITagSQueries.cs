@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.Implementation.Queries
+namespace TagS.ApplicationInterface.Queries.Abstractions
 {
-    internal class TagQueries:IQueries
+    public interface ITagSQueries
     {
-        
     }
 }

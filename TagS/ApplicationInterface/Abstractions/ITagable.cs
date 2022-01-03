@@ -14,7 +14,7 @@ namespace TagS.ApplicationInterface.Abstractions
     /// To identify a class that can tag.
     /// </summary>
     /// <typeparam name="TPersistence">Persistence modes:SQL MongoDB File.TPersistence must be one of class under Infrastructure/Persistences</typeparam>
-    public interface ITagable<TReferrerId,TPersistence>
+    public interface ITagable<TReferrerId>
         where TReferrerId : IEquatable<TReferrerId>
     {
         /// <summary>

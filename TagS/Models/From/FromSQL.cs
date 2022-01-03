@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TagS.Models.From
 {
-    public class FromSQL
+    public class FromSQL : From
     {
+        public override string FromTypeName => nameof(FromSQL);
+        public string TableName { get; set; }
     }
 }

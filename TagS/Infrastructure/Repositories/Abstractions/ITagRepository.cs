@@ -10,12 +10,13 @@ using Tag= HongJieSun.TagS.Models.Tags.Tag;
 
 namespace TagS.Infrastructure.Repositories.Abstractions
 {
-    internal interface ITagRepository<TPersistence>
+    public interface ITagRepository
     {
         bool Existed(Tag tag);
         bool Existed(Guid tagGuid);
         bool Existed(IEnumerable<Guid> tagGuids);
         bool Existed(string preferredTagName);
+        bool IsSynonymOfExistedTag(string synonym);
         Task<Tag> GetTagByGuidAsync(Guid tagGuid);
         Task<Tag> GetTagByPreferredNameAsync(string preferredName);
         Task AddAsync(Tag tag);

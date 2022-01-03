@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 using TagS.ApplicationInterface.Abstractions;
 using TagS.Models.Referrers.Abstractions;
 
-namespace TagS.ApplicationInterface.TagReferrerManager
+namespace TagS.ApplicationInterface.TagReferrerManagers
 {
-    internal interface ITagReferrerManager<TReferrerId,TPersistence>
+    public interface ITagReferrerManager<TReferrerId>
         where TReferrerId : IEquatable<TReferrerId>
     {
-        Task AddAsync(ITagable<TReferrerId, TPersistence> tagable);
-        Task UpdateAsync(ITagable<TReferrerId,TPersistence> tagable);
-        Task DeleteAsync(ITagable<TReferrerId,TPersistence> tagable);
-        Task AddTagAsync(ITagable<TReferrerId,TPersistence> tagable, TagIdentityModel tagIdentityModel);
-        Task RemoveTagAsync(ITagable<TReferrerId,TPersistence> tagable, Guid tagGuid);
+        Task AddAsync(ITagable<TReferrerId> tagable);
+        Task UpdateAsync(ITagable<TReferrerId> tagable);
+        Task DeleteAsync(ITagable<TReferrerId> tagable);
+        Task AddTagAsync(ITagable<TReferrerId> tagable, TagIdentityModel tagIdentityModel);
+        Task RemoveTagAsync(ITagable<TReferrerId> tagable, Guid tagGuid);
     }
 }

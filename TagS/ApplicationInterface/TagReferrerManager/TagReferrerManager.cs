@@ -11,20 +11,20 @@ using TagS.Infrastructure.Repositories.Abstractions;
 using TagS.Models.Referrers;
 using TagS.Models.Referrers.Abstractions;
 
-namespace TagS.ApplicationInterface.TagReferrerManager
+namespace TagS.ApplicationInterface.TagReferrerManagers
 {
-    internal class TagReferrerManager<TReferrerId,TPersistence> : ITagReferrerManager<TReferrerId,TPersistence>
+    public  class TagReferrerManager<TReferrerId> : ITagReferrerManager<TReferrerId>
         where TReferrerId : IEquatable<TReferrerId>
     {
-        private readonly ITagRepository<TPersistence> _tagRepository;
-        private readonly ITagReferrerRepository<TReferrerId,TPersistence> _tagReferrerRepository;
-        public TagReferrerManager(ITagRepository<TPersistence> tagRepository,ITagReferrerRepository<TReferrerId,TPersistence> tagReferrerRepository)
+        private readonly ITagRepository _tagRepository;
+        private readonly ITagReferrerRepository<TReferrerId> _tagReferrerRepository;
+        public TagReferrerManager(ITagRepository tagRepository,ITagReferrerRepository<TReferrerId> tagReferrerRepository)
         {
             _tagRepository=tagRepository;
             _tagReferrerRepository = tagReferrerRepository;
         }
 
-        public Task AddAsync(ITagable<TReferrerId, TPersistence> tagable)
+        public Task AddAsync(ITagable<TReferrerId> tagable)
         {
             var referrer=GetReferrerFrom(tagable);
             //Get referrer by method GetReferrerFrom.If referrer is not existed in database the return referrer's guid is Guid.Empty.
@@ -34,7 +34,7 @@ namespace TagS.ApplicationInterface.TagReferrerManager
             return Task.CompletedTask;
         }
 
-        public Task UpdateAsync(ITagable<TReferrerId, TPersistence> tagable)
+        public Task UpdateAsync(ITagable<TReferrerId> tagable)
         {
             var referrer = GetReferrerFrom(tagable);
 
@@ -44,7 +44,7 @@ namespace TagS.ApplicationInterface.TagReferrerManager
             return _tagReferrerRepository.UpdateAsync(referrer);
         }
 
-        public Task DeleteAsync(ITagable<TReferrerId, TPersistence> tagable)
+        public Task DeleteAsync(ITagable<TReferrerId> tagable)
         {
             var referrer = GetReferrerFrom(tagable);
 
@@ -54,7 +54,7 @@ namespace TagS.ApplicationInterface.TagReferrerManager
             return _tagReferrerRepository.DeleteAsync(referrer);
         }
 
-        public async Task AddTagAsync(ITagable<TReferrerId, TPersistence> tagable, TagIdentityModel tagIdentityModel)
+        public async Task AddTagAsync(ITagable<TReferrerId> tagable, TagIdentityModel tagIdentityModel)
         {
             if (!_tagRepository.Existed(tagIdentityModel.TagGuid))
                 throw new ArgumentException($"Tag with Guid:{tagIdentityModel.TagGuid} is not existed.");
@@ -69,7 +69,7 @@ namespace TagS.ApplicationInterface.TagReferrerManager
             await _tagRepository.AddReferrerAsync(tagIdentityModel.TagGuid, referrer.Guid);
         }
 
-        public async Task RemoveTagAsync(ITagable<TReferrerId, TPersistence> tagable, Guid tagGuid)
+        public async Task RemoveTagAsync(ITagable<TReferrerId> tagable, Guid tagGuid)
         {
             if (!_tagRepository.Existed(tagGuid))
                 throw new ArgumentException($"Tag with Guid{tagGuid} is not existed.");
@@ -87,7 +87,7 @@ namespace TagS.ApplicationInterface.TagReferrerManager
             await _tagRepository.RemoveReferrerAsync(tagGuid, referrer.Guid);
         }
 
-        private IReferrer<TReferrerId> GetReferrerFrom(ITagable<TReferrerId,TPersistence> tagable)
+        private IReferrer<TReferrerId> GetReferrerFrom(ITagable<TReferrerId> tagable)
         {
             var referrer = tagable.ToReferrer();
             referrer.Guid = Guid.Empty;//Under any situations,The Guid of Referrer which generate by ToReferrer should be Guid.Empty.

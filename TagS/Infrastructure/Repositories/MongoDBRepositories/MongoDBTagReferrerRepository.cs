@@ -13,7 +13,7 @@ using MongoDB.Driver;
 
 namespace TagS.Infrastructure.Repositories.MongoDBRepositories
 {
-    internal class MongoDBTagReferrerRepository<TReferrerId> : ITagReferrerRepository<TReferrerId, TagReferrerMongoDBContext<TReferrerId>>
+    public class MongoDBTagReferrerRepository<TReferrerId> : ITagReferrerRepository<TReferrerId>
         where TReferrerId : IEquatable<TReferrerId>
     {
         private readonly TagReferrerMongoDBContext<TReferrerId> _tagReferrerMongoDBContext;

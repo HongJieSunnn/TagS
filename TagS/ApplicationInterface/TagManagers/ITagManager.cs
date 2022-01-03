@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagS.ApplicationInterface.TagManager
+namespace TagS.ApplicationInterface.TagManagers
 {
-    public interface ITagManager<TPersistence>
+    public interface ITagManager
     {
         Task AddTagAsync(Tag tag);
 

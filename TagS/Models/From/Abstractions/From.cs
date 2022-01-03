@@ -11,6 +11,6 @@ namespace TagS.Models.From
     /// </summary>
     public abstract class From
     {
-        string FromTypeName { get; }
+        public abstract string FromTypeName { get; }
     }
 }
