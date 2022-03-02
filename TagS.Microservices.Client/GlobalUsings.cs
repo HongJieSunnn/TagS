@@ -1,0 +1,14 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using MongoDB.Bson;
+global using MediatR;
+global using TagS.Microservices.Client.Models;
+global using MongoDB.Bson.Serialization.Attributes;
+global using TagS.Microservices.Client.DomainEvents;
+global using TagS.Microservices.Client.IntegrationEvents;
+global using DomainSeedWork;
+global using Microsoft.Extensions.Logging;
+global using EventBusCommon.Abstractions;

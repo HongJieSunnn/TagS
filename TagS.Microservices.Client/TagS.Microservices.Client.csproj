@@ -6,4 +6,27 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.14.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DomainSeedWork">
+      <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\SeedWork\DomainSeedWork\bin\Debug\net6.0\DomainSeedWork.dll</HintPath>
+    </Reference>
+    <Reference Include="EventBusCommon">
+      <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\EventBus\EventBusCommon\bin\Debug\net6.0\EventBusCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="IntegrationEventRecord">
+      <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\EventBus\IntegrationEventRecord\bin\Debug\net6.0\IntegrationEventRecord.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entensions\" />
+    <Folder Include="MediatRBehaviors\" />
+  </ItemGroup>
+
 </Project>

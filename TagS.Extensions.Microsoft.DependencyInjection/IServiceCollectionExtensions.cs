@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using TagS.ApplicationInterface.Configurations;
 using TagS.ApplicationInterface.TagManagers;
 using TagS.ApplicationInterface.TagReferrerManagers;
-using TagS.DependencyInjections;
 using TagS.Infrastructure.Contexts.MongoDB;
 using TagS.Infrastructure.Persistences.MongoDB;
 using TagS.Infrastructure.Repositories.Abstractions;
