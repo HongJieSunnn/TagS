@@ -8,6 +8,10 @@ namespace TagS.Microservices.Client.Models
 {
     public interface IReferrer
     {
-
+        /// <summary>
+        /// We use referrerName to classify.
+        /// For example,We want get LifeRecord with tag Emotion:Happy.We get all referrer with referrerName LifeRecord.
+        /// </summary>
+        string ReferrerName { get; set; }
     }
 }

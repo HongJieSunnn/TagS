@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Microservices.Server",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Microservices.Client", "TagS.Microservices.Client\TagS.Microservices.Client.csproj", "{68EBB4DB-5151-4DAE-BB00-8EFF2B7BF2D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagS.NET5", "TagS.NET5\TagS.NET5.csproj", "{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.NET5", "TagS.NET5\TagS.NET5.csproj", "{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagS.Microservices.Client.Microsoft.DependencyInjection", "TagS.Microservices.Client.Microsoft.DependencyInjection\TagS.Microservices.Client.Microsoft.DependencyInjection.csproj", "{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagS.Microservices.Server.Microsoft.DependencyInjection", "TagS.Microservices.Server.Microsoft.DependencyInjection\TagS.Microservices.Server.Microsoft.DependencyInjection.csproj", "{E4DD895D-D735-4E17-877E-142B5DA3CAD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4DD895D-D735-4E17-877E-142B5DA3CAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4DD895D-D735-4E17-877E-142B5DA3CAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4DD895D-D735-4E17-877E-142B5DA3CAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4DD895D-D735-4E17-877E-142B5DA3CAD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

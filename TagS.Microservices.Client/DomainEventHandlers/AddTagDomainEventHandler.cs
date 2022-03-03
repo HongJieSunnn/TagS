@@ -1,6 +1,4 @@
-﻿using TagS.Microservices.Client.Services;
-
-namespace TagS.Microservices.Client.DomainEventHandlers
+﻿namespace TagS.Microservices.Client.DomainEventHandlers
 {
     public class AddTagDomainEventHandler : INotificationHandler<AddTagDomainEvent>
     {
@@ -26,20 +24,10 @@ namespace TagS.Microservices.Client.DomainEventHandlers
                     await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
                     return;
                 }
+                throw new NullReferenceException($"While use repository to SaveEntity,the Repository {nameof(_repository)} can not be null.");
             }
 
-            //TODO
-            //Publish event by ITagIntegrationEventService
-            //mongodb do not use SaveChanges to Save Changes.
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            await (_integrationEventService as ITagIntegrationEventService)!.PublishEventAsync(addTagIntegrationEvent.Id);
         }
     }
 }

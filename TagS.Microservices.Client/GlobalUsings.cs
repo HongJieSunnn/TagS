@@ -12,3 +12,7 @@ global using TagS.Microservices.Client.IntegrationEvents;
 global using DomainSeedWork;
 global using Microsoft.Extensions.Logging;
 global using EventBusCommon.Abstractions;
+global using EventBusCommon;
+global using TagS.Microservices.Client.Services;
+global using Autofac;
+global using System.Reflection;

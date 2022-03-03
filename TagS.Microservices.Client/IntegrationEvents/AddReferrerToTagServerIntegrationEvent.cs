@@ -1,6 +1,4 @@
-﻿using EventBusCommon;
-
-namespace TagS.Microservices.Client.IntegrationEvents
+﻿namespace TagS.Microservices.Client.IntegrationEvents
 {
     public record AddReferrerToTagServerIntegrationEvent : IntegrationEvent
     {
