@@ -2,7 +2,7 @@
 {
     public record RemoveReferrerToTagServerIntegrationEvent : IntegrationEvent
     {
-        public IReferrer Referrer { get; private set; }
+        public IReferrer Referrer { get; set; }
         public string TagId { get; set; }
         public RemoveReferrerToTagServerIntegrationEvent(IReferrer referrer, string tagId)
         {

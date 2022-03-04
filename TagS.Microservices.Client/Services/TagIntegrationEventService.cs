@@ -41,6 +41,7 @@ namespace TagS.Microservices.Client.Services
                 }
                 catch (Exception ex)
                 {
+                    //TODO 加上发送邮件？
                     _logger.LogError(ex, "ERROR publishing integration event: {IntegrationEventId} from {AppName}", record.EventId, Assembly.GetEntryAssembly()?.FullName);
                     throw;
                 }

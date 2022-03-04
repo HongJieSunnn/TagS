@@ -12,15 +12,16 @@ namespace TagS.Microservices.Server.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
-        public string PreferredTagName { get; set; }
+        public string PreferredTagName { get;set; }
         public string TagDetail { get; set; }
-        public HashSet<string> Synonyms { get; set; }
+        public List<string> Synonyms { get; set; }
         public List<IReferrer> Referrers { get; set; }
-        public TagWithReferrer(string preferredTagName,string tagDetail,IEnumerable<string> synonyms,List<IReferrer> referrers)
+        public TagWithReferrer(string id,string preferredTagName,string tagDetail,List<string> synonyms,List<IReferrer>? referrers)
         {
+            Id= id;
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
-            Synonyms=(synonyms is HashSet<string>)?(HashSet<string>)synonyms:synonyms.ToHashSet();
+            Synonyms = synonyms;
             Referrers = referrers ?? new List<IReferrer>();
         }
     }

@@ -16,17 +16,9 @@
             var removeTagIntegrationEvent = new RemoveReferrerToTagServerIntegrationEvent(notification.Referrer, notification.TagId);
             await _integrationEventService.AddAndSaveEventAsync(removeTagIntegrationEvent);
 
-            if (_integrationEventService.GetType() != typeof(ITagIntegrationEventService))
-            {
-                if (_repository is not null)
-                {
-                    await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
-                    return;
-                }
-                throw new NullReferenceException($"While use repository to SaveEntity,the Repository {nameof(_repository)} can not be null.");
-            }
 
-            await (_integrationEventService as ITagIntegrationEventService)!.PublishEventAsync(removeTagIntegrationEvent.Id);
+            if (_integrationEventService.GetType() == typeof(ITagIntegrationEventService))
+                await (_integrationEventService as ITagIntegrationEventService)!.PublishEventAsync(removeTagIntegrationEvent.Id);
         }
     }
 }

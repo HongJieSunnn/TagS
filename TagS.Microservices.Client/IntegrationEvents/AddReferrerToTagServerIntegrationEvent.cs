@@ -2,7 +2,7 @@
 {
     public record AddReferrerToTagServerIntegrationEvent : IntegrationEvent
     {
-        public IReferrer Referrer { get;private set; }
+        public IReferrer Referrer { get;set; }
         public string TagId { get; set; }
         public AddReferrerToTagServerIntegrationEvent(IReferrer referrer,string tagId)
         {
