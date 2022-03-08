@@ -1,6 +1,4 @@
 ﻿using Innermost.MongoDBContext.Configurations;
-using MediatR;
-using TagS.Microservices.Server.Models;
 
 namespace TagS.Microservices.Server
 {
@@ -10,6 +8,7 @@ namespace TagS.Microservices.Server
         private readonly IMediator? _mediator;
         public IMongoCollection<TagWithReferrer>? TagWithReferrers { get; set; }
         public IMongoCollection<Tag>? Tags { get; set; }
+        public IMongoCollection<TagReviewed>? TagReviedweds { get; set; }
         public TagSMongoDBContext(MongoDBContextConfiguration<TagSMongoDBContext> mongoDB) : base(mongoDB)
         {
         }
@@ -19,14 +18,18 @@ namespace TagS.Microservices.Server
             _mediator = mediator;
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public async Task<bool> SaveEntitiesAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
+            where TEntity : Entity<string>
         {
-            throw new NotImplementedException();
-        }
+            var domainEvents = entity.DomainEvents;
+            entity.ClearDomainEvents();
 
-        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();//TODO raise domainEvents
+            foreach (var domainEvent in domainEvents)
+            {
+                await _mediator.Publish(domainEvent);
+            }
+
+            return true;
         }
 
         public void Dispose()
@@ -36,6 +39,16 @@ namespace TagS.Microservices.Server
                 base.Client.Cluster.Dispose();
                 _disposed = true;
             }
+        }
+
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }

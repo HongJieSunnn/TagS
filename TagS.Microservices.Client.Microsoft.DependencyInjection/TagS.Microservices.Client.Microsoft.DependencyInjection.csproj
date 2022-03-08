@@ -18,4 +18,10 @@
     <ProjectReference Include="..\TagS.Microservices.Client\TagS.Microservices.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="EventBusCommon">
+      <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\EventBus\EventBusCommon\bin\Debug\net6.0\EventBusCommon.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

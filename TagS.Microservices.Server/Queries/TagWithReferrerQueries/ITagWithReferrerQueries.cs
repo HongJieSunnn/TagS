@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagS.Microservices.Server.Queries.TagWithReferrerQueries
+﻿namespace TagS.Microservices.Server.Queries.TagWithReferrerQueries
 {
-    internal interface ITagWithReferrerQueries
+    public interface ITagWithReferrerQueries
     {
+        Task<IEnumerable<TReferrer>> GetReferrersOfTagAsync<TReferrer>(string tagId, Func<TReferrer, bool> predicate) where TReferrer : IReferrer;
+
     }
 }

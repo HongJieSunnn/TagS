@@ -1,6 +1,6 @@
 ﻿namespace TagS.Microservices.Server.DomainEvents
 {
-    internal class DeleteTagDomainEvent:IRequest
+    public class DeleteTagDomainEvent:INotification
     {
         public string TagId { get; set; }
         public DeleteTagDomainEvent(string tagId)

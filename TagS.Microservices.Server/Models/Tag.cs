@@ -10,14 +10,14 @@
         public List<Tag> NextTags { get; private set; }
 
         [BsonConstructor]
-        public Tag(string id, string preferredTagName, string tagDetail, string previousTagId, List<string> synonyms, List<string> realatedTagIds, List<Tag> nextTags)
+        public Tag(string id, string preferredTagName, string tagDetail, string? previousTagId, List<string>? synonyms, List<string>? realatedTagIds, List<Tag>? nextTags)
         {
             Id = id;
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
             PreviousTagId = previousTagId;
-            Synonyms = synonyms;
-            RelatedTagIds = realatedTagIds;
+            Synonyms = synonyms??new List<string>();
+            RelatedTagIds = realatedTagIds??new List<string>();
             NextTags = nextTags??new List<Tag>();
         }
 

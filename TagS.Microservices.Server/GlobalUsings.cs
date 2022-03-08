@@ -19,3 +19,7 @@ global using System.Reflection;
 global using DomainSeedWork.Abstractions;
 global using TagS.Microservices.Server.DomainEvents;
 global using MediatR;
+global using TagS.Microservices.Server.Commands;
+global using TagS.Microservices.Server.Repositories.TagReviewedRepository;
+global using TagS.Microservices.Server.Repositories.TagRepository;
+global using TagS.Microservices.Server.DomainEvents.TagReviewed;

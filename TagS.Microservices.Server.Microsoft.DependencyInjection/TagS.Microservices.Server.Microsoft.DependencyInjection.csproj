@@ -10,4 +10,21 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TagS.Microservices.Client\TagS.Microservices.Client.csproj" />
+    <ProjectReference Include="..\TagS.Microservices.Server\TagS.Microservices.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DomainSeedWork">
+      <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\SeedWork\DomainSeedWork\bin\Debug\net6.0\DomainSeedWork.dll</HintPath>
+    </Reference>
+    <Reference Include="Innermost.MongoDBContext">
+      <HintPath>..\..\Innermost.MongoDBContext\Innermost.MongoDBContext\bin\Debug\net6.0\Innermost.MongoDBContext.dll</HintPath>
+    </Reference>
+    <Reference Include="Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection">
+      <HintPath>..\..\Innermost.MongoDBContext\Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection\bin\Debug\net6.0\Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
