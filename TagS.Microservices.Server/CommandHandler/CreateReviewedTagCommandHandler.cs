@@ -1,4 +1,6 @@
-﻿namespace TagS.Microservices.Server.CommandHandler
+﻿using Innermost.IdempotentCommand.Infrastructure.Repositories;
+
+namespace TagS.Microservices.Server.CommandHandler
 {
     public class CreateReviewedTagCommandHandler : IRequestHandler<CreateReviewedTagCommand, bool>
     {
@@ -11,6 +13,18 @@
         {
             var reviewedTag = new TagReviewed(request.PreferredTagName, request.TagDetail, request.UserId, request.CreateTime, request.PreviousTagId);
             await _tagReviewedRepository.CreateReviewedTagAsync(reviewedTag);
+            return true;
+        }
+    }
+
+    public class IdempotentCreateReviewedTagCommandHandler : IdempotentCommandHandler<CreateReviewedTagCommand, bool>
+    {
+        public IdempotentCreateReviewedTagCommandHandler(IMediator mediator, ICommandRequestRepository commandRequestRepository) : base(mediator, commandRequestRepository)
+        {
+        }
+
+        protected override bool CreateDefault()
+        {
             return true;
         }
     }

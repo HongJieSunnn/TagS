@@ -8,11 +8,16 @@ namespace TagS.Microservices.Client.DomainSeedWork
         /// <summary>
         /// Initial in Derived TagableEntity Class.
         /// </summary>
-        public ICollection<TagSummary> Tags { get; set; }
+        public List<TagSummary> Tags { get; set; }
 
-        public TagableEntity(ICollection<TagSummary> tagSummaries)
+        public TagableEntity(List<TagSummary> tagSummaries)
         {
             Tags = tagSummaries;
+            foreach (var tag in Tags)
+            {
+                var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
+                AddDomainEvent(addEvent);
+            }
         }
 
         public void AddTag(TagSummary tag)
@@ -25,7 +30,7 @@ namespace TagS.Microservices.Client.DomainSeedWork
         public void UpdateTag(TagSummary tag)
         {
             var tagToUpdate = Tags.First(t => t.TagId == tag.TagId);
-            tagToUpdate.Name = tag.Name;
+            tagToUpdate.TagName = tag.TagName;
         }
 
         public void RemoveTag(TagSummary tag)
@@ -50,7 +55,7 @@ namespace TagS.Microservices.Client.DomainSeedWork
         where TEntity: TagableEntity<TId, TEntity>
         where TId : IEquatable<TId>, IComparable<TId>
     {
-        public ICollection<TagSummary<TId,TEntity>> Tags { get; set; }
+        public List<TagSummary<TId,TEntity>> Tags { get; set; }
 
         public TagableEntity(List<TagSummary<TId, TEntity>> tagSummaries)
         {
@@ -67,7 +72,7 @@ namespace TagS.Microservices.Client.DomainSeedWork
         public void UpdateTag(TagSummary<TId, TEntity> tag)
         {
             var tagToUpdate = Tags.First(t => t.TagId == tag.TagId);
-            tagToUpdate.Name = tag.Name;
+            tagToUpdate.TagName = tag.TagName;
         }
 
         public void RemoveTag(TagSummary<TId, TEntity> tag)

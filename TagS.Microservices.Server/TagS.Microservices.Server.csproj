@@ -22,6 +22,9 @@
     <Reference Include="EventBusCommon">
       <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\EventBus\EventBusCommon\bin\Debug\net6.0\EventBusCommon.dll</HintPath>
     </Reference>
+    <Reference Include="Innermost.IdempotentCommand">
+      <HintPath>..\..\Innermost.IdempotentCommand\Innermost.IdempotentCommand\bin\Debug\net6.0\Innermost.IdempotentCommand.dll</HintPath>
+    </Reference>
     <Reference Include="Innermost.MongoDBContext">
       <HintPath>..\..\Innermost.MongoDBContext\Innermost.MongoDBContext\bin\Debug\net6.0\Innermost.MongoDBContext.dll</HintPath>
     </Reference>

@@ -5,7 +5,7 @@
         public string PreferredTagName { get; private set; }
         public string TagDetail { get; private set; }
         public string? PreviousTagId { get; private set; }
-        public Guid UserId { get;private set; }
+        public string UserId { get;private set; }
 
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime CreateTime { get;private set; }
@@ -14,7 +14,7 @@
         public TagReviewedStatue Statue { get;private set; }
 
         [BsonConstructor]
-        public TagReviewed(string preferredTagName,string tagDetail,Guid userId,DateTime createTime,string? previousTagId=null)
+        public TagReviewed(string preferredTagName,string tagDetail,string userId,DateTime createTime,string? previousTagId=null)
         {
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;

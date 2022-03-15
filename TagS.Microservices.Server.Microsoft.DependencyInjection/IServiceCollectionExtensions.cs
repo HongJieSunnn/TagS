@@ -2,6 +2,8 @@
 using Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
+using MongoDB.Driver.GeoJsonObjectModel;
 using TagS.Microservices.Client.Models;
 using TagS.Microservices.Server.Queries.TagQueries;
 using TagS.Microservices.Server.Queries.TagReviewedQueries;
@@ -20,16 +22,6 @@ namespace TagS.Microservices.Server.Microsoft.DependencyInjection
                 .AddMongoDBContext<TagSMongoDBContext>(mongoDBConfigurationAction)
                 .AddTagSServerQueriesAndRepositories();
 
-            return services;
-        }
-
-        public static IServiceCollection AddReferrerDiscriminator<TReferrer>(this IServiceCollection services)
-            where TReferrer : IReferrer
-        {
-            var existedIdProperty = typeof(TReferrer).GetProperties().Any(p => p.Name.ToUpper() == "ID");
-            if (!existedIdProperty)
-                throw new InvalidOperationException("Referrer should have a ID match the ID of TagableEntity");
-            BsonClassMap.RegisterClassMap<TReferrer>();
             return services;
         }
 

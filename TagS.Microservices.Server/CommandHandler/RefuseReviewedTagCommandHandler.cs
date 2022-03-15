@@ -1,6 +1,8 @@
-﻿namespace TagS.Microservices.Server.CommandHandler
+﻿using Innermost.IdempotentCommand.Infrastructure.Repositories;
+
+namespace TagS.Microservices.Server.CommandHandler
 {
-    internal class RefuseReviewedTagCommandHandler : IRequestHandler<RefuseReviewedTagCommand, bool>
+    public class RefuseReviewedTagCommandHandler : IRequestHandler<RefuseReviewedTagCommand, bool>
     {
         private readonly ITagReviewedRepository _tagReviewedRepository;
         public RefuseReviewedTagCommandHandler(ITagReviewedRepository tagReviewedRepository)
@@ -12,6 +14,18 @@
         {
             var result = await _tagReviewedRepository.RefuseReviewedTagAsync(request.ReviewedTagId);
             return result;
+        }
+    }
+
+    public class IdempotentRefuseReviewedTagCommandHandler : IdempotentCommandHandler<RefuseReviewedTagCommand,bool>
+    {
+        public IdempotentRefuseReviewedTagCommandHandler(IMediator mediator, ICommandRequestRepository commandRequestRepository) : base(mediator, commandRequestRepository)
+        {
+        }
+
+        protected override bool CreateDefault()
+        {
+            return true;
         }
     }
 }

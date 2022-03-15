@@ -1,16 +1,21 @@
-﻿using TagS.Microservices.Client.DomainSeedWork;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using TagS.Microservices.Client.DomainSeedWork;
 
 namespace TagS.Microservices.Client.Models
 {
     public class TagSummary
     {
+        [Key]
+        [Column("TagId")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string TagId { get; set; }
-        public string Name { get; set; }
-        public TagSummary(string tagId,string name)
+        [Column("TagName")]
+        public string TagName { get; set; }
+        public TagSummary(string tagId,string tagName)
         {
             TagId = tagId;
-            Name = name;
+            TagName = tagName;
         }
         public override bool Equals(object? obj)
         {
@@ -33,7 +38,7 @@ namespace TagS.Microservices.Client.Models
         where TEntity: TagableEntity<TId, TEntity>
         where TId : IEquatable<TId>, IComparable<TId>
     {
-        public ICollection<TEntity>? Entities { get; set; }
+        public List<TEntity>? Entities { get; set; }
         public TagSummary(string tagId, string name) : base(tagId, name)
         {
         }
