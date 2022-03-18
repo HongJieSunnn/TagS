@@ -2,11 +2,11 @@
 {
     public class CreateReviewedTagCommand:IRequest<bool>
     {
-        public string PreferredTagName { get; private set; }
-        public string TagDetail { get; private set; }
-        public string? PreviousTagId { get; private set; }
+        public string PreferredTagName { get; set; }
+        public string TagDetail { get; set; }
+        public string? PreviousTagId { get; set; }
         public string UserId { get; set; }
-        public DateTime CreateTime { get; private set; }
+        public DateTime CreateTime { get; set; }
         public CreateReviewedTagCommand(string preferredTagName,string tagDetail,string userId,DateTime createTime, string? previousTagId=null)
         {
             PreferredTagName = preferredTagName;

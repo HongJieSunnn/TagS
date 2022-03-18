@@ -7,9 +7,16 @@
         {
             _context = tagSMongoDBContext;
         }
+
         public async Task<IEnumerable<Tag>> GetAllTagsAsync()
         {
             var tags = await _context.Tags.FindAsync(t => t.Id != null);
+            return tags.ToList();
+        }
+
+        public async Task<IEnumerable<Tag>> GetAllFirstLevelTagsAsync()
+        {
+            var tags = await _context.Tags.FindAsync(t => t.Id != null&&t.PreviousTagId==null);
             return tags.ToList();
         }
 

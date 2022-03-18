@@ -8,12 +8,22 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.14.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TagS.Microservices.Client\TagS.Microservices.Client.csproj" />
     <ProjectReference Include="..\TagS.Microservices.Server\TagS.Microservices.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DomainSeedWork">
+      <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\SeedWork\DomainSeedWork\bin\Debug\net6.0\DomainSeedWork.dll</HintPath>
+    </Reference>
+    <Reference Include="EventBusCommon">
+      <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\EventBus\EventBusCommon\bin\Debug\net6.0\EventBusCommon.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

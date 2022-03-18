@@ -7,10 +7,11 @@
         public string? PreviousTagId { get; private set; }
         public string UserId { get;private set; }
 
-        [BsonRepresentation(BsonType.DateTime)]
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime CreateTime { get;private set; }
-        [BsonRepresentation(BsonType.DateTime)]
-        public DateTime UpdateTime { get;private set; }
+
+        [BsonDateTimeOptions(Kind =DateTimeKind.Local)]
+        public DateTime? UpdateTime { get;private set; }
         public TagReviewedStatue Statue { get;private set; }
 
         [BsonConstructor]
@@ -20,7 +21,7 @@
             TagDetail = tagDetail;
             UserId=userId;
             CreateTime = createTime;
-            UpdateTime = default(DateTime);
+            UpdateTime = null;
             PreviousTagId = previousTagId;
             Statue = TagReviewedStatue.ToBeReviewed;
         }

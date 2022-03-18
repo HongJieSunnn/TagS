@@ -1,6 +1,6 @@
 ﻿namespace TagS.Microservices.Server.IntegrationEventHandler
 {
-    internal class RemoveReferrerToTagServerIntegrationEventHandler : IIntegrationEventHandler<RemoveReferrerToTagServerIntegrationEvent>
+    public class RemoveReferrerToTagServerIntegrationEventHandler : IIntegrationEventHandler<RemoveReferrerToTagServerIntegrationEvent>
     {
         private readonly ILogger<RemoveReferrerToTagServerIntegrationEventHandler> _logger;
         private readonly ITagWithReferrerRepository _tagWithReferrerRepository;

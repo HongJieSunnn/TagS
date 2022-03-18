@@ -12,6 +12,7 @@
         public async Task Handle(DeleteTagDomainEvent notification, CancellationToken cancellationToken)
         {
             await _tagWithReferrerRepository.DeleteAsync(notification.TagId);
+            //TODO notify Tag clients.
         }
     }
 }

@@ -22,12 +22,13 @@ namespace TagS.Microservices.Server
             where TEntity : Entity<string>
         {
             var domainEvents = entity.DomainEvents;
-            entity.ClearDomainEvents();
 
             foreach (var domainEvent in domainEvents)
             {
                 await _mediator.Publish(domainEvent);
             }
+
+            entity.ClearDomainEvents();//reference
 
             return true;
         }

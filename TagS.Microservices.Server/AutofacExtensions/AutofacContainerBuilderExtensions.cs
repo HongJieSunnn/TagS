@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using CommonService.Behaviors;
 
 namespace TagS.Microservices.Server.AutofacExtensions
 {
@@ -12,6 +13,7 @@ namespace TagS.Microservices.Server.AutofacExtensions
         {
             builder.RegisterAssemblyTypes(typeof(AddTagDomainEvent).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(INotificationHandler<>));
             builder.RegisterAssemblyTypes(typeof(CreateReviewedTagCommand).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterGeneric(typeof(MongoDBTransactionBehavior<,>)).As(typeof(IPipelineBehavior<,>));
         }
     }
 }
