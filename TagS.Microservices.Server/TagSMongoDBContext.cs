@@ -21,7 +21,7 @@ namespace TagS.Microservices.Server
         public async Task<bool> SaveEntitiesAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
             where TEntity : Entity<string>
         {
-            var domainEvents = entity.DomainEvents;
+            var domainEvents = entity.DomainEvents??new List<INotification>();
 
             foreach (var domainEvent in domainEvents)
             {

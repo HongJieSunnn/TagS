@@ -2,15 +2,25 @@
 {
     public class Tag:Entity<string>,IAggregateRoot
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public override string Id { get => base.Id; set => base.Id = value; }
         public string PreferredTagName { get;private set; }//unique name should be like Emotion:Happy,ProgramingLanguage:C#:C#10
         public string TagDetail { get; private set; }
         public string? PreviousTagId { get; private set; }
-        public List<string> Synonyms { get; private set; }
-        public List<string> RelatedTagIds { get; private set; }
-        public List<Tag> NextTags { get; private set; }
+
+        [BsonRequired]
+        [BsonElement("Synonyms")]
+        private List<string> _synonyms;
+        public IReadOnlyCollection<string> Synonyms => _synonyms.AsReadOnly();
+
+        [BsonRequired]
+        [BsonElement("RelatedTagIds")]
+        private List<string> _relatedTagIds;
+        public IReadOnlyCollection<string> RelatedTagIds => _relatedTagIds.AsReadOnly();
+
+        [BsonRequired]
+        [BsonElement("NextTags")]
+        private List<Tag> _nextTags;
+        public IReadOnlyCollection<Tag> NextTags => _nextTags.AsReadOnly();
+
         [BsonDateTimeOptions(Kind =DateTimeKind.Local)]
         public DateTime CreateTime { get;private set; }
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
@@ -23,16 +33,16 @@
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
             PreviousTagId = previousTagId;
-            Synonyms = synonyms??new List<string>();
-            RelatedTagIds = realatedTagIds??new List<string>();
-            NextTags = nextTags??new List<Tag>();
+            _synonyms = synonyms??new List<string>();
+            _relatedTagIds = realatedTagIds??new List<string>();
+            _nextTags = nextTags??new List<Tag>();
             CreateTime = DateTime.Now;
         }
 
         public void AddSynonym(string synonym)
         {
             if(!Synonyms.Contains(synonym))
-                Synonyms.Add(synonym);
+                _synonyms.Add(synonym);
             SetUpdateTime();
             AddDomainEvent(new AddSynonymDomainEvent(this.Id, synonym));
         }
@@ -40,7 +50,7 @@
         public void RemoveSynonym(string synonym)
         {
             if (Synonyms.Contains(synonym))
-                Synonyms.Remove(synonym);
+                _synonyms.Remove(synonym);
             SetUpdateTime();
             AddDomainEvent(new RemoveSynonymDomainEvent(this.Id, synonym));
         }
@@ -48,27 +58,27 @@
         public void AddRelatedTagId(string tagId)
         {
             if (!RelatedTagIds.Contains(tagId))
-                RelatedTagIds.Add(tagId);
+                _relatedTagIds.Add(tagId);
             SetUpdateTime();
         }
 
         public void RemoveRelatedTagId(string tagId)
         {
             if (RelatedTagIds.Contains(tagId))
-                RelatedTagIds.Remove(tagId);
+                _relatedTagIds.Remove(tagId);
             SetUpdateTime();
         }
 
-        public void AddNextTag(Tag tag)
+        public void AddNextTag(Tag tag,string firstLevelTagId)
         {
             if(NextTags.FirstOrDefault(t=>t.PreferredTagName==tag.PreferredTagName) is null)
             {
                 if (tag.PreviousTagId is null)
                     tag.PreviousTagId = this.Id;
-                NextTags.Add(tag);
+                _nextTags.Add(tag);
                 SetUpdateTime();
                 //While we add a new tag which is not first level tag we should also send this domainEvent.
-                AddDomainEvent(new AddTagDomainEvent(new TagWithReferrer(tag.Id, tag.PreferredTagName, tag.TagDetail, tag.Synonyms, null,tag.CreateTime)));
+                AddDomainEvent(new AddTagDomainEvent(new TagWithReferrer(tag.Id, tag.PreferredTagName, tag.TagDetail, tag._synonyms, null,tag.CreateTime,Id, firstLevelTagId)));
             }
         }
 
@@ -76,7 +86,7 @@
         {
             if (NextTags.Contains(tag))
             {
-                NextTags.Remove(tag);
+                _nextTags.Remove(tag);
                 AddDomainEvent(new DeleteTagDomainEvent(tag.Id));
             }
         }

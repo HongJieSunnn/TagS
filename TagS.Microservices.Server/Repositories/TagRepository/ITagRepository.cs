@@ -5,16 +5,16 @@
         bool Existed(string tagId);
         bool ExistedPreferredName(string preferredTagName);
 
-        Task AddAsync(Tag tag);
-        Task AddAsync(IEnumerable<Tag> tags);
+        Task AddAsync(Tag tag,string? firstLevelTagId=null);
 
-        Task<UpdateResult> UpdateAsync(Tag tag);
+        Task<ReplaceOneResult> UpdateAsync(Tag tag);
         /// <summary>
         /// Update many with same change.
         /// </summary>
         /// <param name="tags"></param>
         /// <returns></returns>
-        Task<UpdateResult> UpdateAsync(IEnumerable<string> tags, UpdateDefinition<Tag> updateDefinition);
+        Task<UpdateResult> UpdateAsync(IEnumerable<string> tagIds, UpdateDefinition<Tag> updateDefinition);
+        Task<UpdateResult> UpdateAsync(string tagId, UpdateDefinition<Tag> updateDefinition);
         /// <summary>
         /// Update many with different changes.
         /// </summary>

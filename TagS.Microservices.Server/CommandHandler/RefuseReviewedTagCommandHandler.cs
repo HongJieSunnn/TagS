@@ -12,8 +12,8 @@ namespace TagS.Microservices.Server.CommandHandler
         }
         public async Task<bool> Handle(RefuseReviewedTagCommand request, CancellationToken cancellationToken)
         {
-            var result = await _tagReviewedRepository.RefuseReviewedTagAsync(request.ReviewedTagId);
-            return result;
+            var updateResult = await _tagReviewedRepository.RefuseReviewedTagAsync(request.ReviewedTagId);
+            return updateResult.result;
         }
     }
 

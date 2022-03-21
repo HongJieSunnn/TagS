@@ -12,60 +12,10 @@
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public async Task AddAsync(Tag tag)
+        public async Task AddAsync(Tag tag,string? firstLevelTagId=null)
         {
             await _context.Tags.InsertOneAsync(tag);
-            await _mediator.Publish(new AddTagDomainEvent(new TagWithReferrer(tag.Id, tag.PreferredTagName, tag.TagDetail, tag.Synonyms, null, tag.CreateTime)));
-            await SendAddTagDomainEventForNextTagsAsync(tag);
-        }
-
-        public async Task AddAsync(IEnumerable<Tag> tags)
-        {
-            await _context.Tags.InsertManyAsync(tags);
-            foreach (var tag in tags)
-            {
-                await _mediator.Publish(new AddTagDomainEvent(new TagWithReferrer(tag.Id, tag.PreferredTagName, tag.TagDetail, tag.Synonyms, null, tag.CreateTime)));
-                await SendAddTagDomainEventForNextTagsAsync(tag);
-            }
-        }
-
-        /// <summary>
-        /// While we add a tag with nextTags,we add nextTags to TagWithReferrerCollection while publish the domainEvents added in AddNextTag method.
-        /// But when the nextTags also have nextTags,the domainEvents belong to nextTag.So we can not publish them by first level tag.
-        /// So we should publish them manually.
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        private async Task SendAddTagDomainEventForNextTagsAsync(Tag tag)
-        {
-            if (tag.NextTags.Count == 0)
-                return;
-            foreach (var nextTag in tag.NextTags)
-            {
-                if(nextTag.DomainEvents is not null)
-                {
-                    foreach (var domainEvent in nextTag.DomainEvents)
-                    {
-                        await _mediator.Publish(domainEvent);
-                    }
-                    await SendAddTagDomainEventForNextTagsAsync(nextTag);
-                }
-            }
-        }
-
-        private Task SendAddTagDomainEventAsync(Tag tag)
-        {
-            Task<object?>[] AddTagDomainEventTasks = new Task<object?>[1 + tag.NextTags.Count];
-
-            AddTagDomainEventTasks[0] = _mediator.Send(new AddTagDomainEvent(new TagWithReferrer(tag.Id, tag.PreferredTagName, tag.TagDetail, tag.Synonyms, null,tag.CreateTime)));
-            for (int i = 0; i < tag.NextTags.Count; ++i)
-            {
-                AddTagDomainEventTasks[i + 1] = _mediator.Send(new AddTagDomainEvent(
-                    new TagWithReferrer(tag.NextTags[i].Id, tag.NextTags[i].PreferredTagName, tag.NextTags[i].TagDetail, tag.NextTags[i].Synonyms, null, tag.NextTags[i].CreateTime))
-                );
-            }
-
-            return Task.WhenAll(AddTagDomainEventTasks);
+            await _mediator.Publish(new AddTagDomainEvent(new TagWithReferrer(tag.Id, tag.PreferredTagName, tag.TagDetail, tag.Synonyms.ToList(), null, tag.CreateTime,tag.PreviousTagId,firstLevelTagId)));
         }
 
         public Task<BulkWriteResult<Tag>> BulkWriteAsync(IEnumerable<Tag> tags)
@@ -107,14 +57,19 @@
             return tag.FirstOrDefault();
         }
 
-        public Task<UpdateResult> UpdateAsync(Tag tag)
+        public Task<ReplaceOneResult> UpdateAsync(Tag tag)
         {
-            return _context.Tags.UpdateOneAsync(t => t.Id == tag.Id, tag.ToBsonDocument());
+            return _context.Tags.ReplaceOneAsync(t => t.Id == tag.Id, tag);
         }
 
         public Task<UpdateResult> UpdateAsync(IEnumerable<string> tagIds,UpdateDefinition<Tag> updateDefinition)
         {
             return _context.Tags.UpdateManyAsync(t => tagIds.Contains(t.Id), updateDefinition);
+        }
+
+        public Task<UpdateResult> UpdateAsync(string tagId, UpdateDefinition<Tag> updateDefinition)
+        {
+            return _context.Tags.UpdateOneAsync(t => t.Id==tagId, updateDefinition);
         }
 
         private bool IsSynonymOfExistedTag(string synonym)

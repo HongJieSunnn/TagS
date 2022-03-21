@@ -12,13 +12,12 @@ namespace TagS.Microservices.Server.CommandHandler
         }
         public async Task<bool> Handle(PassReviewedTagCommand request, CancellationToken cancellationToken)
         {
-            var result = await _tagReviewedRepository.PassReviewedTagAsync(request.ReviewedTagId);
-            if (result)
+            var updateResult = await _tagReviewedRepository.PassReviewedTagAsync(request.ReviewedTagId);
+            if (updateResult.result)
             {
-                var tag = await _tagReviewedRepository.GetTagReviewedAsync(request.ReviewedTagId);
-                await _tagReviewedRepository.UnitOfWork.SaveEntitiesAsync(tag,cancellationToken);
+                await _tagReviewedRepository.UnitOfWork.SaveEntitiesAsync(updateResult.entity,cancellationToken);
             }
-            return result;
+            return updateResult.result;
         }
     }
 

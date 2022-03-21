@@ -11,7 +11,10 @@ namespace TagS.Microservices.Server.CommandHandler
         }
         public async Task<bool> Handle(CreateReviewedTagCommand request, CancellationToken cancellationToken)
         {
-            var reviewedTag = new TagReviewed(request.PreferredTagName, request.TagDetail, request.UserId, request.CreateTime, request.PreviousTagId);
+            if (_tagReviewedRepository.ExistedPreferredName(request.PreferredTagName))
+                return false;
+
+            var reviewedTag = new TagReviewed(request.PreferredTagName, request.TagDetail, request.UserId, request.CreateTime, request.PreviousTagId,request.FirstLevelTagId);
             await _tagReviewedRepository.CreateReviewedTagAsync(reviewedTag);
             return true;
         }

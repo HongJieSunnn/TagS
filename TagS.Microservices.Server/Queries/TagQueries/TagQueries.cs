@@ -34,7 +34,7 @@
 
         public async Task<Tag> GetTagBySynonymAsync(string synonym)
         {
-            var tag = await _context.Tags.FindAsync(t => t.Synonyms.Contains(synonym));
+            var tag = await _context.Tags.FindAsync(t => t.Synonyms.ToList().Contains(synonym));//Call exception.
             return tag.First();
         }
     }
