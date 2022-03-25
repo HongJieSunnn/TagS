@@ -39,7 +39,7 @@ namespace TagS.Microservices.Client.Models
         where TId : IEquatable<TId>, IComparable<TId>
     {
         public List<TEntity>? Entities { get; set; }
-        public TagSummary(string tagId, string name) : base(tagId, name)
+        public TagSummary(string tagId, string tagName) : base(tagId, tagName)
         {
         }
     }

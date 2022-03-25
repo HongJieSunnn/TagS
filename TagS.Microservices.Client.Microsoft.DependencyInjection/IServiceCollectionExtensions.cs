@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Bson.Serialization;
-using TagS.Microservices.Client.Models;
+﻿using EventBusCommon.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using TagS.Microservices.Client.Services;
 
 namespace TagS.Microservices.Client.Microsoft.DependencyInjection
@@ -10,6 +9,7 @@ namespace TagS.Microservices.Client.Microsoft.DependencyInjection
         public static IServiceCollection AddTagSClient(this IServiceCollection services)
         {
             services.AddScoped<ITagIntegrationEventService, TagIntegrationEventService>();
+            services.AddScoped<IIntegrationEventService, TagIntegrationEventService>();
 
             return services;
         }

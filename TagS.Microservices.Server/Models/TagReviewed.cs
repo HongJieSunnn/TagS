@@ -5,7 +5,7 @@
         public string PreferredTagName { get; private set; }
         public string TagDetail { get; private set; }
         public string? PreviousTagId { get; private set; }
-        public string? FirstLevelTagId { get; private set; }
+        public List<string>? Ancestors { get; private set; }
         public string UserId { get;private set; }
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
@@ -16,7 +16,7 @@
         public TagReviewedStatue Statue { get;private set; }
 
         [BsonConstructor]
-        public TagReviewed(string preferredTagName,string tagDetail,string userId,DateTime createTime,string? previousTagId=null,string? firstLevelTagId=null)
+        public TagReviewed(string preferredTagName,string tagDetail,string userId,DateTime createTime,string? previousTagId=null,List<string>? ancestors=null)
         {
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
@@ -24,7 +24,7 @@
             CreateTime = createTime;
             UpdateTime = null;
             PreviousTagId = previousTagId;
-            FirstLevelTagId = firstLevelTagId;
+            Ancestors = ancestors??new List<string>();
             Statue = TagReviewedStatue.ToBeReviewed;
         }
 
@@ -32,7 +32,7 @@
         {
             Statue = TagReviewedStatue.Passed;
             UpdateTime=DateTime.Now;
-            AddDomainEvent(new SetReviewedTagPassedDomainEvent(PreferredTagName,TagDetail,PreviousTagId,FirstLevelTagId));
+            AddDomainEvent(new SetReviewedTagPassedDomainEvent(PreferredTagName,TagDetail,PreviousTagId,Ancestors));
             return Builders<TagReviewed>.Update.Set(t => t.Statue, Statue).Set(t => t.UpdateTime, UpdateTime);
         }
 

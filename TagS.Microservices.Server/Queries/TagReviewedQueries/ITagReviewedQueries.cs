@@ -2,6 +2,6 @@
 {
     public interface ITagReviewedQueries
     {
-        Task<IEnumerable<TagReviewed>> GetTobeReviewedTagsAsync();
+        Task<IEnumerable<TagReviewedDTO>> GetTobeReviewedTagsAsync();
     }
 }

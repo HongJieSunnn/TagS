@@ -8,34 +8,51 @@
             _context = tagSMongoDBContext;
         }
 
-        public async Task<IEnumerable<Tag>> GetAllTagsAsync()
+        public async Task<IEnumerable<TagDTO>> GetAllTagsAsync()
         {
-            var tags = await _context.Tags.FindAsync(t => t.Id != null);
-            return tags.ToList();
+            var tags =await _context.Tags.AsQueryable().ToListAsync();
+            return tags.Select(t=>MapTagToTagDTO(t));
         }
 
-        public async Task<IEnumerable<Tag>> GetAllFirstLevelTagsAsync()
+        public async Task<IEnumerable<TagDTO>> GetAllFirstLevelTagsAsync()
         {
-            var tags = await _context.Tags.FindAsync(t => t.Id != null&&t.PreviousTagId==null);
-            return tags.ToList();
+            var tags = await _context.Tags.FindAsync(t=>t.PreviousTagId==null);
+            var tagDTOs=tags.ToList().Select(t=>MapTagToTagDTO(t));
+            return tagDTOs;
         }
 
-        public async Task<IEnumerable<Tag>> GetNextTagsAsync(string objectId)
+        public async Task<IEnumerable<TagDTO>> GetNextTagsAsync(string tagId)
         {
-            var nextTags = await _context.Tags.FindAsync(t => t.Id == objectId);
-            return nextTags.First().NextTags;
+            var tags=await _context.Tags.FindAsync(t=>t.PreviousTagId== tagId);
+            var tagDTOs=tags.ToList().Select(t=>MapTagToTagDTO(t));
+            return tagDTOs;
         }
 
-        public async Task<Tag> GetTagByPreferredNameAsync(string preferredName)
+        public async Task<TagDTO> GetTagByPreferredNameAsync(string preferredName)
         {
-            var tag = await _context.Tags.FindAsync(t => t.PreferredTagName == preferredName);
-            return tag.First();
+            var tag = await _context.Tags.FindAsync(t=>t.PreferredTagName== preferredName);
+            return MapTagToTagDTO(tag.First());
         }
 
-        public async Task<Tag> GetTagBySynonymAsync(string synonym)
+        public async Task<TagDTO> GetTagBySynonymAsync(string synonym)
         {
-            var tag = await _context.Tags.FindAsync(t => t.Synonyms.ToList().Contains(synonym));//Call exception.
-            return tag.First();
+            var filter = Builders<Tag>.Filter.Eq("Synonyms", synonym);
+            var tag = await _context.Tags.FindAsync(filter);//Call exception.
+            return MapTagToTagDTO(tag.First());
+        }
+
+        private TagDTO MapTagToTagDTO(Tag tag)
+        {
+            return new TagDTO(
+                tag.Id, 
+                tag.PreferredTagName, 
+                tag.TagDetail, 
+                tag.PreviousTagId, 
+                tag.Ancestors?.ToList(), 
+                tag.Synonyms.ToList(), 
+                tag.RelatedTagIds.ToList(), 
+                tag.CreateTime
+            );
         }
     }
 }

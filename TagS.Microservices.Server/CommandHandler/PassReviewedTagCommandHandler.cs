@@ -15,7 +15,7 @@ namespace TagS.Microservices.Server.CommandHandler
             var updateResult = await _tagReviewedRepository.PassReviewedTagAsync(request.ReviewedTagId);
             if (updateResult.result)
             {
-                await _tagReviewedRepository.UnitOfWork.SaveEntitiesAsync(updateResult.entity,cancellationToken);
+                await _tagReviewedRepository.UnitOfWork.SaveEntitiesAsync(updateResult.entity!,cancellationToken);
             }
             return updateResult.result;
         }

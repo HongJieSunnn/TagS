@@ -13,18 +13,18 @@ namespace TagS.Microservices.Client.DomainSeedWork
         public TagableEntity(List<TagSummary> tagSummaries)
         {
             Tags = tagSummaries;
-            foreach (var tag in Tags)
-            {
-                var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
-                AddDomainEvent(addEvent);
-            }
+        }
+
+        public void AddDomainEventForAddingTag(TagSummary tag)
+        {
+            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
+            AddDomainEvent(addEvent);
         }
 
         public void AddTag(TagSummary tag)
         {
             Tags.Add(tag);
-            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
-            AddDomainEvent(addEvent);
+            AddDomainEventForAddingTag(tag);
         }
 
         public void UpdateTag(TagSummary tag)
@@ -62,11 +62,16 @@ namespace TagS.Microservices.Client.DomainSeedWork
             Tags = tagSummaries;
         }
 
+        public void AddDomainEventForAddingTag(TagSummary<TId, TEntity> tag)
+        {
+            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
+            AddDomainEvent(addEvent);
+        }
+
         public void AddTag(TagSummary<TId, TEntity> tag)
         {
             Tags.Add(tag);
-            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
-            AddDomainEvent(addEvent);
+            AddDomainEventForAddingTag(tag);
         }
 
         public void UpdateTag(TagSummary<TId, TEntity> tag)

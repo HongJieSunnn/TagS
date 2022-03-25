@@ -5,13 +5,13 @@
         public string PreferredTagName { get; private set; }
         public string TagDetail { get; private set; }
         public string? PreviousTagId { get; private set; }
-        public string? FirstLevelTagId { get; private set; }
-        public SetReviewedTagPassedDomainEvent(string preferredTagName,string tagDetail,string? previousTagId,string? firstLevelTagId)
+        public List<string>? Ancestors { get; private set; }
+        public SetReviewedTagPassedDomainEvent(string preferredTagName,string tagDetail,string? previousTagId, List<string>? ancestors)
         {
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
             PreviousTagId = previousTagId;
-            FirstLevelTagId = firstLevelTagId;
+            Ancestors = ancestors;
         }
     }
 }

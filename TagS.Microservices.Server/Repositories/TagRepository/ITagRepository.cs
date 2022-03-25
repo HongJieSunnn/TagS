@@ -5,7 +5,7 @@
         bool Existed(string tagId);
         bool ExistedPreferredName(string preferredTagName);
 
-        Task AddAsync(Tag tag,string? firstLevelTagId=null);
+        Task AddAsync(Tag tag);
 
         Task<ReplaceOneResult> UpdateAsync(Tag tag);
         /// <summary>
@@ -22,8 +22,8 @@
         /// <returns></returns>
         Task<BulkWriteResult<Tag>> BulkWriteAsync(IEnumerable<Tag> tags);
 
-        Task<DeleteResult> DeleteAsync(string tagId);
-        Task<DeleteResult> DeleteAsync(IEnumerable<string> tagIds);
+        Task<UpdateResult> DeleteAsync(string tagId);
+        Task<UpdateResult> DeleteAsync(IEnumerable<string> tagIds);
 
         Task<Tag> GetTagAsync(string tagId);
     }

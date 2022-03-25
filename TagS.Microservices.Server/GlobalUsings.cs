@@ -24,3 +24,4 @@ global using TagS.Microservices.Server.Repositories.TagReviewedRepository;
 global using TagS.Microservices.Server.Repositories.TagRepository;
 global using TagS.Microservices.Server.DomainEvents.TagReviewed;
 global using Innermost.IdempotentCommand;
+global using TagS.Microservices.Server.Queries.Models;

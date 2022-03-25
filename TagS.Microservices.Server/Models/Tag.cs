@@ -7,6 +7,11 @@
         public string? PreviousTagId { get; private set; }
 
         [BsonRequired]
+        [BsonElement("Ancestors")]
+        private List<string>? _ancestors;
+        public IReadOnlyCollection<string>? Ancestors =>_ancestors?.AsReadOnly();
+
+        [BsonRequired]
         [BsonElement("Synonyms")]
         private List<string> _synonyms;
         public IReadOnlyCollection<string> Synonyms => _synonyms.AsReadOnly();
@@ -16,29 +21,28 @@
         private List<string> _relatedTagIds;
         public IReadOnlyCollection<string> RelatedTagIds => _relatedTagIds.AsReadOnly();
 
-        [BsonRequired]
-        [BsonElement("NextTags")]
-        private List<Tag> _nextTags;
-        public IReadOnlyCollection<Tag> NextTags => _nextTags.AsReadOnly();
-
         [BsonDateTimeOptions(Kind =DateTimeKind.Local)]
         public DateTime CreateTime { get;private set; }
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime? UpdateTime { get;private set; }
 
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        public DateTime? DeleteTime { get; private set; }
+
         //TODO I don't know why [BsonConstructor] will cause error while GetCollection<Tag> by MongoDBContextBase.But it's useful in TagReviewed.
-        public Tag(string? id, string preferredTagName, string tagDetail, string? previousTagId, List<string>? synonyms, List<string>? realatedTagIds, List<Tag>? nextTags)
+        public Tag(string? id, string preferredTagName, string tagDetail, string? previousTagId,List<string>? ancestors, List<string>? synonyms, List<string>? realatedTagIds)
         {
             Id = id??ObjectId.GenerateNewId().ToString();
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
             PreviousTagId = previousTagId;
+            _ancestors=ancestors?? new List<string>();
             _synonyms = synonyms??new List<string>();
             _relatedTagIds = realatedTagIds??new List<string>();
-            _nextTags = nextTags??new List<Tag>();
             CreateTime = DateTime.Now;
         }
 
+        //TODO modify the return value to UpdateDefinition<Tag>
         public void AddSynonym(string synonym)
         {
             if(!Synonyms.Contains(synonym))
@@ -69,32 +73,17 @@
             SetUpdateTime();
         }
 
-        public void AddNextTag(Tag tag,string firstLevelTagId)
-        {
-            if(NextTags.FirstOrDefault(t=>t.PreferredTagName==tag.PreferredTagName) is null)
-            {
-                if (tag.PreviousTagId is null)
-                    tag.PreviousTagId = this.Id;
-                _nextTags.Add(tag);
-                SetUpdateTime();
-                //While we add a new tag which is not first level tag we should also send this domainEvent.
-                AddDomainEvent(new AddTagDomainEvent(new TagWithReferrer(tag.Id, tag.PreferredTagName, tag.TagDetail, tag._synonyms, null,tag.CreateTime,Id, firstLevelTagId)));
-            }
-        }
-
-        public void RemoveNextTag(Tag tag)
-        {
-            if (NextTags.Contains(tag))
-            {
-                _nextTags.Remove(tag);
-                AddDomainEvent(new DeleteTagDomainEvent(tag.Id));
-            }
-        }
-
         public void ChangeTagDetail(string tagDetail)
         {
             TagDetail = tagDetail;
             AddDomainEvent(new ChangeTagDetailDomainEvent(this.Id, tagDetail));
+        }
+
+        public UpdateDefinition<Tag> SetDeleted()
+        {
+            DeleteTime = DateTime.Now;
+            //DomainEvents
+            return Builders<Tag>.Update.Set(t => t.DeleteTime, DeleteTime);
         }
 
         private void SetUpdateTime()
