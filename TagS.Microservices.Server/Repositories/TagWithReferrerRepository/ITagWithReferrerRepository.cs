@@ -7,7 +7,7 @@ namespace TagS.Microservices.Server.Repositories.TagWithReferrerRepository
         Task AddAsync(TagWithReferrer tagWithReferrer);
         Task<UpdateResult> DeleteAsync(string tagId);
         Task AddReferrerToTagAsync(string tagId,IReferrer referrer);
-        Task RemoveReferrerToTagAsync(string tagId,IReferrer referrer);
+        Task RemoveReferrerToTagAsync(string tagId, IReferrer referrer);
         Task ChangeTagDetailAsync(string tagId,string detail);
         Task AddSynonymAsync(string tagId,string synonym);
         Task RemoveSynonymAsync(string tagId,string synonym);

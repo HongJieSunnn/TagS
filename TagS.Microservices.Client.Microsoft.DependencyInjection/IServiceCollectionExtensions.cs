@@ -6,7 +6,7 @@ namespace TagS.Microservices.Client.Microsoft.DependencyInjection
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddTagSClient(this IServiceCollection services)
+        public static IServiceCollection AddTagSClientMongoDBIntegrationEventService(this IServiceCollection services)
         {
             services.AddScoped<ITagIntegrationEventService, TagIntegrationEventService>();
             services.AddScoped<IIntegrationEventService, TagIntegrationEventService>();

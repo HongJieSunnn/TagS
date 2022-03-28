@@ -26,9 +26,11 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
         public static IApplicationBuilder AddReferrerDiscriminator<TReferrer>(this IApplicationBuilder builder)
             where TReferrer : IReferrer
         {
-            var existedIdProperty = typeof(TReferrer).GetProperties().Any(p => p.Name.ToUpper() == "ID");
+            var existedIdProperty = typeof(TReferrer).GetProperties().Any(p => p.Name.ToUpper() == "REFERRERID");
+
             if (!existedIdProperty)
-                throw new InvalidOperationException("Referrer should have a ID match the ID of TagableEntity");
+                throw new InvalidOperationException("Referrer should have a ReferrerID match the ID of TagableEntity");
+
             BsonClassMap.RegisterClassMap<TReferrer>(t=>
             {
                 t.AutoMap();//If not contain this line,the referrer will only has a _t value.

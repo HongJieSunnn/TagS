@@ -15,16 +15,16 @@ namespace TagS.Microservices.Client.DomainSeedWork
             Tags = tagSummaries;
         }
 
-        public void AddDomainEventForAddingTag(TagSummary tag)
-        {
-            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
-            AddDomainEvent(addEvent);
-        }
-
         public void AddTag(TagSummary tag)
         {
             Tags.Add(tag);
             AddDomainEventForAddingTag(tag);
+        }
+
+        public void AddDomainEventForAddingTag(TagSummary tag)
+        {
+            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
+            AddDomainEvent(addEvent);
         }
 
         public void UpdateTag(TagSummary tag)
@@ -36,6 +36,11 @@ namespace TagS.Microservices.Client.DomainSeedWork
         public void RemoveTag(TagSummary tag)
         {
             Tags.Remove(tag);
+            AddDomainEventForRemovingTag(tag)
+        }
+
+        public void AddDomainEventForRemovingTag(TagSummary tag)
+        {
             var removeEvent = new RemoveTagDomainEvent(ToReferrer(), tag.TagId);
             AddDomainEvent(removeEvent);
         }
@@ -62,16 +67,16 @@ namespace TagS.Microservices.Client.DomainSeedWork
             Tags = tagSummaries;
         }
 
-        public void AddDomainEventForAddingTag(TagSummary<TId, TEntity> tag)
-        {
-            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
-            AddDomainEvent(addEvent);
-        }
-
         public void AddTag(TagSummary<TId, TEntity> tag)
         {
             Tags.Add(tag);
             AddDomainEventForAddingTag(tag);
+        }
+
+        public void AddDomainEventForAddingTag(TagSummary<TId, TEntity> tag)
+        {
+            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
+            AddDomainEvent(addEvent);
         }
 
         public void UpdateTag(TagSummary<TId, TEntity> tag)
@@ -83,10 +88,15 @@ namespace TagS.Microservices.Client.DomainSeedWork
         public void RemoveTag(TagSummary<TId, TEntity> tag)
         {
             Tags.Remove(tag);
+            AddDomainEventForRemovingTag(tag);
+        }
+
+        public void AddDomainEventForRemovingTag(TagSummary<TId, TEntity> tag)
+        {
             var removeEvent = new RemoveTagDomainEvent(ToReferrer(), tag.TagId);
             AddDomainEvent(removeEvent);
         }
 
-        protected abstract IReferrer ToReferrer();
+        public abstract IReferrer ToReferrer();
     }
 }
