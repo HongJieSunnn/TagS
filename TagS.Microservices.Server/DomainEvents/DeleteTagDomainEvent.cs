@@ -2,7 +2,7 @@
 {
     public class DeleteTagDomainEvent:INotification
     {
-        public string TagId { get; set; }
+        public string TagId { get;init; }
         public DeleteTagDomainEvent(string tagId)
         {
             TagId=tagId;
