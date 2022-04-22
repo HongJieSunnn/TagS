@@ -10,7 +10,7 @@
         }
         public async Task Handle(SetReviewedTagPassedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var tagToAdd = new Tag(null, notification.PreferredTagName, notification.TagDetail, notification.PreviousTagId, notification.Ancestors, null, null);
+            var tagToAdd = new Tag(null, notification.PreferredTagName, notification.TagDetail, notification.PreviousTagId, notification.Ancestors,notification.Synonyms, null);
             await _tagRepository.AddAsync(tagToAdd);
         }
     }
