@@ -8,16 +8,19 @@ namespace TagS.Microservices.Client.DomainSeedWork
         /// <summary>
         /// Initial in Derived TagableEntity Class.
         /// </summary>
-        public List<TagSummary> Tags { get; set; }
+        [BsonRequired]
+        [BsonElement("Tags")]
+        private List<TagSummary> _tags { get; set; }
 
+        public IReadOnlyCollection<TagSummary> Tags => _tags;
         public TagableEntity(List<TagSummary> tagSummaries)
         {
-            Tags = tagSummaries;
+            _tags = tagSummaries;
         }
 
         public void AddTag(TagSummary tag)
         {
-            Tags.Add(tag);
+            _tags.Add(tag);
             AddDomainEventForAddingTag(tag);
         }
 
@@ -35,8 +38,8 @@ namespace TagS.Microservices.Client.DomainSeedWork
 
         public void RemoveTag(TagSummary tag)
         {
-            Tags.Remove(tag);
-            AddDomainEventForRemovingTag(tag)
+            _tags.Remove(tag);
+            AddDomainEventForRemovingTag(tag);
         }
 
         public void AddDomainEventForRemovingTag(TagSummary tag)
@@ -60,7 +63,7 @@ namespace TagS.Microservices.Client.DomainSeedWork
         where TEntity: TagableEntity<TId, TEntity>
         where TId : IEquatable<TId>, IComparable<TId>
     {
-        public List<TagSummary<TId,TEntity>> Tags { get; set; }
+        public List<TagSummary<TId,TEntity>> Tags { get; set; }//2022.4.20 I don't modify to private field,I'm afraid there will call errors after modified.But it's not corresponding.
 
         public TagableEntity(List<TagSummary<TId, TEntity>> tagSummaries)
         {
