@@ -14,6 +14,10 @@
         [BsonRequired]
         public List<string>? Ancestors { get; private set; }
         public List<string> Synonyms { get; set; }
+
+        /// <summary>
+        /// While referrer in referrers updates,we replace it.
+        /// </summary>
         public List<IReferrer> Referrers { get; set; }
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime CreateTime { get; set; }
@@ -27,7 +31,7 @@
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
             PreviousTagId= previousTagId;
-            Ancestors = ancestors??new List<string>();
+            Ancestors = ancestors;
             Synonyms = synonyms;
             Referrers = referrers ?? new List<IReferrer>();
             CreateTime = createTime;

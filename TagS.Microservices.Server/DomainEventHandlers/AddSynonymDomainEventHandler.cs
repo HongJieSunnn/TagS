@@ -9,7 +9,7 @@
         }
         public async Task Handle(AddSynonymDomainEvent notification, CancellationToken cancellationToken)
         {
-            await _tagWithReferrerRepository.AddSynonymAsync(notification.TagId, notification.Synonym);
+            throw new NotImplementedException();
         }
     }
 }

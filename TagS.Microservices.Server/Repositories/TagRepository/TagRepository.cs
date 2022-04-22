@@ -16,14 +16,14 @@
 
         public async Task AddAsync(Tag tag)
         {
-            await _context.Tags.InsertOneAsync(_session, tag);
+            await _context.Tags!.InsertOneAsync(_session, tag);
             await _mediator.Publish(new AddTagDomainEvent(new TagWithReferrer(tag.Id, tag.PreferredTagName, tag.TagDetail, tag.Synonyms.ToList(), null, tag.CreateTime,tag.PreviousTagId,tag.Ancestors?.ToList())));
         }
 
         public Task<BulkWriteResult<Tag>> BulkWriteAsync(IEnumerable<Tag> tags)
         {
             var tagUpdateModel=tags.Select(t=>new UpdateOneModel<Tag>(new ExpressionFilterDefinition<Tag>(tag => tag.Id == t.Id),t.ToBsonDocument())).ToList();
-            return _context.Tags.BulkWriteAsync(tagUpdateModel);
+            return _context.Tags!.BulkWriteAsync(tagUpdateModel);
         }
         //TODO soft delete?
         public async Task<UpdateResult> DeleteAsync(string tagId)

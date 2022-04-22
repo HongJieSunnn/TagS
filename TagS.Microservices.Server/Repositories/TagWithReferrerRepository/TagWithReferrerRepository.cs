@@ -42,22 +42,21 @@
             return _context.TagWithReferrers.UpdateOneAsync(_session, t => t.Id == tagId, updateModel);
         }
 
-        public Task ChangeTagDetailAsync(string tagId, string detail)
+        public Task<UpdateResult> UpdateAsync(string tagId, UpdateDefinition<TagWithReferrer> updateDefinition, params FilterDefinition<TagWithReferrer>[] filterDefinitions)
         {
-            var updateModel = Builders<TagWithReferrer>.Update.Set(t => t.TagDetail, detail).Set(tr => tr.UpdateTime, DateTime.Now);
-            return _context.TagWithReferrers.UpdateOneAsync(_session, t => t.Id == tagId, updateModel);
+            var filter = CombineFilterDefinitions(Builders<TagWithReferrer>.Filter.Eq(t=>t.Id, tagId), filterDefinitions);
+
+            return _context.TagWithReferrers.UpdateOneAsync(_session, filter, updateDefinition);
         }
 
-        public Task AddSynonymAsync(string tagId, string synonym)
+        private FilterDefinition<TagWithReferrer> CombineFilterDefinitions(FilterDefinition<TagWithReferrer> firstFilterDefinition, IEnumerable<FilterDefinition<TagWithReferrer>> filterDefinitions)
         {
-            var updateModel = Builders<TagWithReferrer>.Update.AddToSet(tr => tr.Synonyms, synonym).Set(tr => tr.UpdateTime, DateTime.Now);
-            return _context.TagWithReferrers.UpdateOneAsync(_session, t => t.Id == tagId, updateModel);
-        }
-
-        public Task RemoveSynonymAsync(string tagId, string synonym)
-        {
-            var updateModel = Builders<TagWithReferrer>.Update.Pull(tr => tr.Synonyms, synonym).Set(tr => tr.UpdateTime, DateTime.Now);
-            return _context.TagWithReferrers.UpdateOneAsync(_session, t => t.Id == tagId, updateModel);
+            var filter = firstFilterDefinition;
+            foreach (var filterDefinition in filterDefinitions)
+            {
+                filter &= filterDefinition;
+            }
+            return filter;
         }
     }
 }

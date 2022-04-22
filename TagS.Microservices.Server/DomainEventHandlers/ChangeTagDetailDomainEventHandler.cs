@@ -10,7 +10,7 @@
         }
         public async Task Handle(ChangeTagDetailDomainEvent notification, CancellationToken cancellationToken)
         {
-            await _tagWithReferrerRepository.ChangeTagDetailAsync(notification.TagId,notification.TagDetail);
+            throw new NotImplementedException();
         }
     }
 }

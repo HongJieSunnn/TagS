@@ -36,7 +36,7 @@
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
             PreviousTagId = previousTagId;
-            _ancestors=ancestors?? new List<string>();
+            _ancestors=ancestors;
             _synonyms = synonyms??new List<string>();
             _relatedTagIds = realatedTagIds??new List<string>();
             CreateTime = DateTime.Now;
@@ -48,7 +48,7 @@
             if(!Synonyms.Contains(synonym))
                 _synonyms.Add(synonym);
             SetUpdateTime();
-            AddDomainEvent(new AddSynonymDomainEvent(this.Id, synonym));
+            AddDomainEvent(new AddSynonymDomainEvent(this.Id!, synonym));
         }
 
         public void RemoveSynonym(string synonym)
@@ -56,7 +56,7 @@
             if (Synonyms.Contains(synonym))
                 _synonyms.Remove(synonym);
             SetUpdateTime();
-            AddDomainEvent(new RemoveSynonymDomainEvent(this.Id, synonym));
+            AddDomainEvent(new RemoveSynonymDomainEvent(this.Id!, synonym));
         }
 
         public void AddRelatedTagId(string tagId)
@@ -76,7 +76,7 @@
         public void ChangeTagDetail(string tagDetail)
         {
             TagDetail = tagDetail;
-            AddDomainEvent(new ChangeTagDetailDomainEvent(this.Id, tagDetail));
+            AddDomainEvent(new ChangeTagDetailDomainEvent(this.Id!, tagDetail));
         }
 
         public UpdateDefinition<Tag> SetDeleted()

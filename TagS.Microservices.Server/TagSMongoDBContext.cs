@@ -20,9 +20,9 @@ namespace TagS.Microservices.Server
         }
 
         public async Task<bool> SaveEntitiesAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
-            where TEntity : Entity<string>
+            where TEntity : Entity<string>,IAggregateRoot
         {
-            if(entity.DomainEvents is not null)
+            if (entity.DomainEvents is not null)
             {
                 var domainEvents = entity.DomainEvents;
 
@@ -41,7 +41,7 @@ namespace TagS.Microservices.Server
         {
             if (!_disposed)
             {
-                base.Client.Cluster.Dispose();
+                ClusterRegistry.Instance.UnregisterAndDisposeCluster(Client.Cluster);//Actually,this is unnecessary.
                 _disposed = true;
             }
         }

@@ -16,7 +16,7 @@ namespace TagS.Microservices.Server.DomainEventHandlers
         }
         public async Task Handle(RemoveSynonymDomainEvent notification, CancellationToken cancellationToken)
         {
-            await _tagWithReferrerRepository.RemoveSynonymAsync(notification.TagId, notification.Synonym);
+            throw new NotImplementedException();
         }
     }
 }
