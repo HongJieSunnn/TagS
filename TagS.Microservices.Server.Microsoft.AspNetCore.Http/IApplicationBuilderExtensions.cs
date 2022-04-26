@@ -1,5 +1,4 @@
-﻿using DomainSeedWork.Abstractions;
-using EventBusCommon.Abstractions;
+﻿using EventBusCommon.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +18,8 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
     {
         public static IApplicationBuilder MapTagSMongoDBCollectionModels(this IApplicationBuilder builder)
         {
-            
-            
+
+
             return builder;
         }
         public static IApplicationBuilder AddReferrerDiscriminator<TReferrer>(this IApplicationBuilder builder)
@@ -31,7 +30,7 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
             if (!existedIdProperty)
                 throw new InvalidOperationException("Referrer should have a ReferrerID match the ID of TagableEntity");
 
-            BsonClassMap.RegisterClassMap<TReferrer>(t=>
+            BsonClassMap.RegisterClassMap<TReferrer>(t =>
             {
                 t.AutoMap();//If not contain this line,the referrer will only has a _t value.
                 t.SetDiscriminator($"{typeof(TReferrer).FullName}, {typeof(TReferrer).Namespace}");
@@ -81,8 +80,8 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
             logger.LogInformation("--------------- Start add seed datas for emotion tags ------------");
             var repository = builder.ApplicationServices.GetRequiredService<ITagRepository>();
 
-            var baseEmotionTagObjectId=ObjectId.GenerateNewId().ToString();
-            var baseEmotionTag = new Models.Tag(baseEmotionTagObjectId, "心情", "心情标签", null,null, new List<string> { "情绪","Emotion","Mood" }, null);
+            var baseEmotionTagObjectId = ObjectId.GenerateNewId().ToString();
+            var baseEmotionTag = new Models.Tag(baseEmotionTagObjectId, "心情", "心情标签", null, null, new List<string> { "情绪", "Emotion", "Mood" }, null);
 
             var secondLevelEmtionTagsAncestors = new List<string>() { baseEmotionTagObjectId };
             var secondLevelEmotionTags = new List<Models.Tag>()
@@ -158,7 +157,7 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
 
             var baseMusicTagName = "音乐";
             var baseMusicTagObjectId = ObjectId.GenerateNewId().ToString();
-            var baseMusicTag = new Models.Tag(baseMusicTagObjectId, baseMusicTagName, "音乐标签", null,null, new List<string> { "Music" }, null);
+            var baseMusicTag = new Models.Tag(baseMusicTagObjectId, baseMusicTagName, "音乐标签", null, null, new List<string> { "Music" }, null);
             var secondMusicTagAncestors = new List<string>() { baseMusicTagObjectId };
 
             var baseMusicEmotionTagName = $"{baseMusicTagName}:心情";
@@ -191,6 +190,7 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
                 new Models.Tag(null, $"{baseMusicSceneTagName}:夜店", "夜店场景音乐标签", baseMusicSceneTagObjectId, thirdMusicSceneTagAncestors, null, null),
                 new Models.Tag(null, $"{baseMusicSceneTagName}:学习", "学习场景音乐标签", baseMusicSceneTagObjectId, thirdMusicSceneTagAncestors, null, null),
                 new Models.Tag(null, $"{baseMusicSceneTagName}:运动", "运动场景音乐标签", baseMusicSceneTagObjectId, thirdMusicSceneTagAncestors, null, null),
+                new Models.Tag(null, $"{baseMusicSceneTagName}:开车", "开车场景音乐标签", baseMusicSceneTagObjectId, thirdMusicSceneTagAncestors, null, null),
                 new Models.Tag(null, $"{baseMusicSceneTagName}:约会", "约会场景音乐标签", baseMusicSceneTagObjectId, thirdMusicSceneTagAncestors, null, null),
                 new Models.Tag(null, $"{baseMusicSceneTagName}:工作", "工作场景音乐标签", baseMusicSceneTagObjectId, thirdMusicSceneTagAncestors, null, null),
                 new Models.Tag(null, $"{baseMusicSceneTagName}:旅行", "旅行场景音乐标签", baseMusicSceneTagObjectId, thirdMusicSceneTagAncestors, null, null),
@@ -201,10 +201,37 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
                 new Models.Tag(null, $"{baseMusicSceneTagName}:校园", "校园场景音乐标签", baseMusicSceneTagObjectId, thirdMusicSceneTagAncestors, null, null),
 
             };
+
+            var baseMusicGenreTagName = $"{baseMusicTagName}:流派";
+            var baseMusicGenreTagObjectId = ObjectId.GenerateNewId().ToString();
+            var baseMusicGenreTag = new Models.Tag(baseMusicGenreTagObjectId, baseMusicGenreTagName, "不同流派的音乐。", baseMusicTagObjectId, secondMusicTagAncestors, null, null);
+            var thirdMusicGenreTagAncestors = new[] { baseMusicTagObjectId, baseMusicGenreTagObjectId };
+
+            var tagNamesGenre = new[]
+            {
+                "流行","轻音乐","摇滚","民谣","R&B","嘻哈","电子","古典","乡村","蓝调","爵士","新世纪","拉丁","后摇","中国传统","世界音乐"
+            };
+            var tagDetailsGenre = tagNamesGenre.Select(tn => $"{tn}流派音乐标签").ToArray();
+            var thirdMusicGenreTags = GetMultiLevelTags(null, baseMusicGenreTagObjectId, baseMusicGenreTagName, tagNamesGenre, tagDetailsGenre, thirdMusicGenreTagAncestors);
+
+            var baseMusicThemeTagName = $"{baseMusicTagName}:主题";
+            var baseMusicThemeTagObjectId = ObjectId.GenerateNewId().ToString();
+            var baseMusicThemeTag = new Models.Tag(baseMusicThemeTagObjectId, baseMusicThemeTagName, "不同主题的音乐。", baseMusicTagObjectId, secondMusicTagAncestors, null, null);
+            var thirdMusicThemeTagAncestors = new[] { baseMusicTagObjectId, baseMusicThemeTagObjectId };
+
+            var tagNamesTheme = new[]
+            {
+                "ACG","经典","网络歌曲","影视","KTV热歌","儿歌","中国风","古风","情歌","城市","现场音乐","背景音乐","佛教音乐","UP主","乐器","DJ"
+            };
+            var tagDetailsTheme = tagNamesTheme.Select(tn => $"{tn}主题音乐标签").ToArray();
+            var thirdMusicThemeTags = GetMultiLevelTags(null, baseMusicThemeTagObjectId, baseMusicThemeTagName, tagNamesTheme, tagDetailsTheme, thirdMusicThemeTagAncestors);
+
             session.StartTransaction();
             repository.AddAsync(baseMusicTag).GetAwaiter().GetResult();
             repository.AddAsync(baseMusicSceeTag).GetAwaiter().GetResult();
             repository.AddAsync(baseMusicEmotionTag).GetAwaiter().GetResult();
+            repository.AddAsync(baseMusicGenreTag).GetAwaiter().GetResult();
+            repository.AddAsync(baseMusicThemeTag).GetAwaiter().GetResult();
             foreach (var tag in thirdMusicEmotionTags)
             {
                 repository.AddAsync(tag).GetAwaiter().GetResult();
@@ -213,9 +240,27 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
             {
                 repository.AddAsync(tag).GetAwaiter().GetResult();
             }
+            foreach (var tag in thirdMusicGenreTags)
+            {
+                repository.AddAsync(tag).GetAwaiter().GetResult();
+            }
+            foreach (var tag in thirdMusicThemeTags)
+            {
+                repository.AddAsync(tag).GetAwaiter().GetResult();
+            }
             session.CommitTransaction();
-            logger.LogInformation("--------------- Finish add seed datas for emotion tags ------------");
+            logger.LogInformation("--------------- Finish add seed datas for music tags ------------");
             return builder;
+        }
+
+        private static IEnumerable<Models.Tag> GetMultiLevelTags(string? id,string preTagId,string preTagName,string[] tagNames,string[] tagDetails,string[] tagAncestors)
+        {
+            var tags= tagNames.Select((tn, i) =>
+            {
+                return new Models.Tag(id, $"{preTagName}:{tn}", tagDetails[i], preTagId, tagAncestors.ToList(), null, null);
+            });
+
+            return tags;
         }
     }
 }
