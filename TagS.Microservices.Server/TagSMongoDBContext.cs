@@ -58,9 +58,11 @@ namespace TagS.Microservices.Server
             if(!TagWithReferrers!.Indexes.List().Any())
             {
                 var ancestorsIndex = Builders<TagWithReferrer>.IndexKeys.Ascending(t => t.Ancestors);
-                var referrersIndex= Builders<TagWithReferrer>.IndexKeys.Ascending(t => t.Referrers);
+                var referrerIdIndex= Builders<TagWithReferrer>.IndexKeys.Ascending("Referrers.Id");
+                var referrerReferrerIdIndex = Builders<TagWithReferrer>.IndexKeys.Ascending("Referrers.ReferrerId");
+                var referrerNameIndex = Builders<TagWithReferrer>.IndexKeys.Ascending("Referrers.ReferrerName");
 
-                var createIndexModels = new[] { ancestorsIndex, referrersIndex }.Select(i => new CreateIndexModel<TagWithReferrer>(i));
+                var createIndexModels = new[] { ancestorsIndex, referrerIdIndex,referrerReferrerIdIndex, referrerNameIndex }.Select(i => new CreateIndexModel<TagWithReferrer>(i));
 
                 TagWithReferrers.Indexes.CreateManyAsync(createIndexModels).GetAwaiter().GetResult();
             }
@@ -72,7 +74,7 @@ namespace TagS.Microservices.Server
             {
                 var ancestorsIndex = Builders<Tag>.IndexKeys.Ascending("_ancestors");
                 var preIdIndex = Builders<Tag>.IndexKeys.Ascending(t => t.PreviousTagId);
-                var nameIndex = Builders<Tag>.IndexKeys.Ascending(t => t.PreferredTagName);
+                var nameIndex = Builders<Tag>.IndexKeys.Text(t => t.PreferredTagName);
                 var synonymsIndex = Builders<Tag>.IndexKeys.Ascending("_synonyms");
                 var tagDetailIndex = Builders<Tag>.IndexKeys.Text(t => t.TagDetail);
 
@@ -86,7 +88,7 @@ namespace TagS.Microservices.Server
         {
             if (!TagRevieweds!.Indexes.List().Any())
             {
-                var nameIndex = Builders<TagReviewed>.IndexKeys.Ascending(t => t.PreferredTagName);
+                var nameIndex = Builders<TagReviewed>.IndexKeys.Text(t => t.PreferredTagName);
                 var statueIndex = Builders<TagReviewed>.IndexKeys.Ascending(t => t.Statue);
 
                 var createIndexModels = new[] { nameIndex,statueIndex }.Select(i => new CreateIndexModel<TagReviewed>(i));
