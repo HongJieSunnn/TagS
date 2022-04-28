@@ -14,11 +14,7 @@
         public async Task Handle(RemoveTagDomainEvent notification, CancellationToken cancellationToken)
         {
             var removeTagIntegrationEvent = new RemoveReferrerToTagServerIntegrationEvent(notification.Referrer, notification.TagId);
-            await _integrationEventService.AddAndSaveEventAsync(removeTagIntegrationEvent);
-
-
-            if (_integrationEventService.GetType() == typeof(ITagIntegrationEventService))
-                await (_integrationEventService as ITagIntegrationEventService)!.PublishEventAsync(removeTagIntegrationEvent.Id);
+            await _integrationEventService.SaveEventAsync(removeTagIntegrationEvent);
         }
     }
 }
