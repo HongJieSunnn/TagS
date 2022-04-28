@@ -22,6 +22,9 @@
     <Reference Include="EventBusCommon">
       <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\EventBus\EventBusCommon\bin\Debug\net6.0\EventBusCommon.dll</HintPath>
     </Reference>
+    <Reference Include="IntegrationEventServiceMongoDB">
+      <HintPath>..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\EventBus\IntegrationEventServiceMongoDB\bin\Debug\net6.0\IntegrationEventServiceMongoDB.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
