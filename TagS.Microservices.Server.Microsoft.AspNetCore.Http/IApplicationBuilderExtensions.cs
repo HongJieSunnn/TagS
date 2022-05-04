@@ -38,16 +38,57 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
             return builder;
         }
 
-        public static IApplicationBuilder AddLocationIndexFroReferrer(this IApplicationBuilder builder, string geoFiledName)
+        /// <summary>
+        /// Add ReferrerIndexes for the referrer in TagWithReferrer.
+        /// </summary>
+        /// <typeparam name="TReferrer">Referrer type.Just to identify which referrer add indexes.</typeparam>
+        /// <param name="builder"></param>
+        /// <param name="indexNames">will create indexKeysDefinitions like Builders<TagWithReferrer>.IndexKeys.Ascending($"Referrers.{indexName}")</param>
+        /// <returns></returns>
+        public static IApplicationBuilder AddReferrerIndexes<TReferrer>(this IApplicationBuilder builder,params string[] indexNames)
+            where TReferrer : IReferrer
         {
-            var context = builder.ApplicationServices.GetService(typeof(TagSMongoDBContext)) as TagSMongoDBContext ?? throw new NullReferenceException(nameof(TagSMongoDBContext));
-            if (context.TagWithReferrers!.Indexes.List().Any())
-                return builder;
+            var context = builder.ApplicationServices.GetRequiredService<TagSMongoDBContext>();
 
-            var locIndex = new IndexKeysDefinitionBuilder<TagWithReferrer>().Geo2DSphere(geoFiledName);//TODO I do not know if it's useful.Maybe this is not necessary,we should use Geo in Meet but not here.
-            var indexModel = new CreateIndexModel<TagWithReferrer>(locIndex);
+            var indexes = indexNames.Select(i => Builders<TagWithReferrer>.IndexKeys.Ascending($"Referrers.{i}")).Select(i => new CreateIndexModel<TagWithReferrer>(i));
 
-            context.TagWithReferrers!.Indexes.CreateOne(indexModel);
+            context.TagWithReferrers!.Indexes.CreateMany(indexes);
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Add ReferrerIndexes for the referrer in TagWithReferrer.
+        /// </summary>
+        /// <typeparam name="TReferrer">Referrer type.Just to identify which referrer add indexes.</typeparam>
+        /// <param name="builder"></param>
+        /// <param name="indexNames">create CreateIndexModel by IndexKeysDefinitions so that we can identify the index type.</param>
+        /// <returns></returns>
+        public static IApplicationBuilder AddReferrerIndexes<TReferrer>(this IApplicationBuilder builder, params IndexKeysDefinition<TagWithReferrer>[] indexKeysDefinitions)
+            where TReferrer : IReferrer
+        {
+            var context = builder.ApplicationServices.GetRequiredService<TagSMongoDBContext>();
+
+            var indexes = indexKeysDefinitions.Select(i => new CreateIndexModel<TagWithReferrer>(i));
+
+            context.TagWithReferrers!.Indexes.CreateMany(indexes);
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Add ReferrerIndexes for the referrer in TagWithReferrer.
+        /// </summary>
+        /// <typeparam name="TReferrer">Referrer type.Just to identify which referrer add indexes.</typeparam>
+        /// <param name="builder"></param>
+        /// <param name="indexNames">create CreateIndexModel by CreateIndexModels so that we can set the options of index like if is unique.</param>
+        /// <returns></returns>
+        public static IApplicationBuilder AddReferrerIndexes<TReferrer>(this IApplicationBuilder builder, params CreateIndexModel<TagWithReferrer>[] createIndexModels)
+            where TReferrer : IReferrer
+        {
+            var context = builder.ApplicationServices.GetRequiredService<TagSMongoDBContext>();
+
+            context.TagWithReferrers!.Indexes.CreateMany(createIndexModels);
 
             return builder;
         }
