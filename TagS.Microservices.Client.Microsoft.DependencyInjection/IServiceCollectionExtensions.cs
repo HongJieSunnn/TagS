@@ -1,6 +1,4 @@
-﻿using EventBusCommon.Abstractions;
-using IntegrationEventServiceMongoDB.Extensions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace TagS.Microservices.Client.Microsoft.DependencyInjection
 {
@@ -8,7 +6,7 @@ namespace TagS.Microservices.Client.Microsoft.DependencyInjection
     {
         public static IServiceCollection AddTagSClient(this IServiceCollection services)
         {
-            
+
 
             return services;
         }
