@@ -25,4 +25,4 @@ global using TagS.Microservices.Server.Queries.Models;
 global using EventBusCommon;
 global using TagS.Microservices.Server.IntegrationEventHandler.IntegrationEvents;
 global using Microsoft.Extensions.Logging;
-global using TagS.Microservices.Client.Models;
+global using TagS.Core.Models;

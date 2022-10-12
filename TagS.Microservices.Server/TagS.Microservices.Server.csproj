@@ -4,22 +4,20 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Authors>HongJieSun</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Innermost.CommonService" Version="1.0.0" />
+    <PackageReference Include="Innermost.DomainSeedWork" Version="1.0.0" />
+    <PackageReference Include="Innermost.EventBusCommon" Version="1.0.0" />
+    <PackageReference Include="Innermost.IdempotentCommand" Version="1.0.0" />
+    <PackageReference Include="Innermost.MongoDBContext" Version="1.0.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
-    <PackageReference Include="MongoDB.Bson" Version="2.15.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.15.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\CommonService\CommonService\CommonService.csproj" />
-    <ProjectReference Include="..\..\..\ASPNETCore\HongJieSun.Innermost\BuildingBlocks\EventBus\EventBusCommon\EventBusCommon.csproj" />
-    <ProjectReference Include="..\..\Innermost.IdempotentCommand\Innermost.IdempotentCommand\Innermost.IdempotentCommand.csproj" />
-    <ProjectReference Include="..\..\Innermost.MongoDBContext\Innermost.MongoDBContext\Innermost.MongoDBContext.csproj" />
-    <ProjectReference Include="..\TagS.Microservices.Client\TagS.Microservices.Client.csproj" />
+    <PackageReference Include="TagS.Core" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
