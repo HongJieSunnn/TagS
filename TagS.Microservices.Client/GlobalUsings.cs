@@ -14,3 +14,4 @@ global using System.Threading.Tasks;
 global using TagS.Microservices.Client.DomainEvents;
 global using TagS.Microservices.Client.IntegrationEvents;
 global using TagS.Microservices.Client.Models;
+global using TagS.Core.Models;
