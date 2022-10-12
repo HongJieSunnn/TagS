@@ -5,19 +5,17 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS", "TagS\TagS.csproj", "{F8ABB3C7-C766-4980-B6C5-E67168F6C107}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Extensions.Microsoft.DependencyInjection", "TagS.Extensions.Microsoft.DependencyInjection\TagS.Extensions.Microsoft.DependencyInjection.csproj", "{D31D4270-1333-4775-8700-7C58530ED431}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Microservices.Server", "TagS.Microservices.Server\TagS.Microservices.Server.csproj", "{E8DA3B04-C234-42B4-A2D0-2A8B30D01A2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Microservices.Client", "TagS.Microservices.Client\TagS.Microservices.Client.csproj", "{68EBB4DB-5151-4DAE-BB00-8EFF2B7BF2D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.NET5", "TagS.NET5\TagS.NET5.csproj", "{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Microservices.Client.Microsoft.DependencyInjection", "TagS.Microservices.Client.Microsoft.DependencyInjection\TagS.Microservices.Client.Microsoft.DependencyInjection.csproj", "{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Microservices.Server.Microsoft.DependencyInjection", "TagS.Microservices.Server.Microsoft.DependencyInjection\TagS.Microservices.Server.Microsoft.DependencyInjection.csproj", "{E4DD895D-D735-4E17-877E-142B5DA3CAD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagS.Microservices.Server.Microsoft.AspNetCore.Http", "TagS.Microservices.Server.Microsoft.AspNetCore.Http\TagS.Microservices.Server.Microsoft.AspNetCore.Http.csproj", "{28C1B40A-D0DD-4736-B363-174FBE64C666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Microservices.Server.Microsoft.AspNetCore.Http", "TagS.Microservices.Server.Microsoft.AspNetCore.Http\TagS.Microservices.Server.Microsoft.AspNetCore.Http.csproj", "{28C1B40A-D0DD-4736-B363-174FBE64C666}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagS.Core", "TagS.Core\TagS.Core.csproj", "{62576DFE-2A38-422A-AC9A-104029A2333F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagS.Microservices.Client.Microsoft.DependencyInjection", "TagS.Microservices.Client.Microsoft.DependencyInjection\TagS.Microservices.Client.Microsoft.DependencyInjection.csproj", "{D1128D9A-ED34-40B2-BA98-6785BADB9CEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{F8ABB3C7-C766-4980-B6C5-E67168F6C107}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8ABB3C7-C766-4980-B6C5-E67168F6C107}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8ABB3C7-C766-4980-B6C5-E67168F6C107}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D31D4270-1333-4775-8700-7C58530ED431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D31D4270-1333-4775-8700-7C58530ED431}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D31D4270-1333-4775-8700-7C58530ED431}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D31D4270-1333-4775-8700-7C58530ED431}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E8DA3B04-C234-42B4-A2D0-2A8B30D01A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E8DA3B04-C234-42B4-A2D0-2A8B30D01A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8DA3B04-C234-42B4-A2D0-2A8B30D01A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,14 +35,6 @@ Global
 		{68EBB4DB-5151-4DAE-BB00-8EFF2B7BF2D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68EBB4DB-5151-4DAE-BB00-8EFF2B7BF2D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68EBB4DB-5151-4DAE-BB00-8EFF2B7BF2D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEDD2B9C-494B-4C5B-A6A2-C62F0E474766}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3E3BEBE-6CE8-4F40-9A24-F347F07DEA39}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E4DD895D-D735-4E17-877E-142B5DA3CAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E4DD895D-D735-4E17-877E-142B5DA3CAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4DD895D-D735-4E17-877E-142B5DA3CAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +43,14 @@ Global
 		{28C1B40A-D0DD-4736-B363-174FBE64C666}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28C1B40A-D0DD-4736-B363-174FBE64C666}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28C1B40A-D0DD-4736-B363-174FBE64C666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62576DFE-2A38-422A-AC9A-104029A2333F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62576DFE-2A38-422A-AC9A-104029A2333F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62576DFE-2A38-422A-AC9A-104029A2333F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62576DFE-2A38-422A-AC9A-104029A2333F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1128D9A-ED34-40B2-BA98-6785BADB9CEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1128D9A-ED34-40B2-BA98-6785BADB9CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1128D9A-ED34-40B2-BA98-6785BADB9CEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1128D9A-ED34-40B2-BA98-6785BADB9CEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
