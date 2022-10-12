@@ -26,7 +26,7 @@ namespace TagS.Microservices.Client.DomainSeedWork
 
         public void AddDomainEventForAddingTag(TagSummary tag)
         {
-            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
+            var addEvent = new AddTagToReferrerDomainEvent(ToReferrer(), tag.TagId);
             AddDomainEvent(addEvent);
         }
 
@@ -44,7 +44,7 @@ namespace TagS.Microservices.Client.DomainSeedWork
 
         public void AddDomainEventForRemovingTag(TagSummary tag)
         {
-            var removeEvent = new RemoveTagDomainEvent(ToReferrer(), tag.TagId);
+            var removeEvent = new RemoveTagToReferrerDomainEvent(ToReferrer(), tag.TagId);
             AddDomainEvent(removeEvent);
         }
 
@@ -78,7 +78,7 @@ namespace TagS.Microservices.Client.DomainSeedWork
 
         public void AddDomainEventForAddingTag(TagSummary<TId, TEntity> tag)
         {
-            var addEvent = new AddTagDomainEvent(ToReferrer(), tag.TagId);
+            var addEvent = new AddTagToReferrerDomainEvent(ToReferrer(), tag.TagId);
             AddDomainEvent(addEvent);
         }
 
@@ -96,7 +96,7 @@ namespace TagS.Microservices.Client.DomainSeedWork
 
         public void AddDomainEventForRemovingTag(TagSummary<TId, TEntity> tag)
         {
-            var removeEvent = new RemoveTagDomainEvent(ToReferrer(), tag.TagId);
+            var removeEvent = new RemoveTagToReferrerDomainEvent(ToReferrer(), tag.TagId);
             AddDomainEvent(removeEvent);
         }
 

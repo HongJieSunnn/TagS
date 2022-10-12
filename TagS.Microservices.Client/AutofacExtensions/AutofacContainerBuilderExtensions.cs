@@ -8,7 +8,7 @@
         /// <param name="builder"></param>
         public static void RegisterTagSMicroservicesClientTypes(this ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(AddTagDomainEvent).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(INotificationHandler<>));
+            builder.RegisterAssemblyTypes(typeof(AddTagToReferrerDomainEvent).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(INotificationHandler<>));
         }
     }
 }

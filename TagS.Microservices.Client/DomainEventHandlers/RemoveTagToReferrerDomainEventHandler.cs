@@ -1,17 +1,17 @@
 ﻿namespace TagS.Microservices.Client.DomainEventHandlers
 {
-    public class RemoveTagDomainEventHandler : INotificationHandler<RemoveTagDomainEvent>
+    public class RemoveTagToReferrerDomainEventHandler : INotificationHandler<RemoveTagToReferrerDomainEvent>
     {
         private readonly IRepository<IAggregateRoot>? _repository;
         private readonly IIntegrationEventService _integrationEventService;
-        private readonly ILogger<RemoveTagDomainEventHandler> _logger;
-        public RemoveTagDomainEventHandler(IIntegrationEventService integrationEventService, ILogger<RemoveTagDomainEventHandler> logger, IRepository<IAggregateRoot>? repository = null)
+        private readonly ILogger<RemoveTagToReferrerDomainEventHandler> _logger;
+        public RemoveTagToReferrerDomainEventHandler(IIntegrationEventService integrationEventService, ILogger<RemoveTagToReferrerDomainEventHandler> logger, IRepository<IAggregateRoot>? repository = null)
         {
             _repository = repository;
             _integrationEventService = integrationEventService;
             _logger = logger;
         }
-        public async Task Handle(RemoveTagDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(RemoveTagToReferrerDomainEvent notification, CancellationToken cancellationToken)
         {
             var removeTagIntegrationEvent = new RemoveReferrerToTagServerIntegrationEvent(notification.Referrer, notification.TagId);
             await _integrationEventService.SaveEventAsync(removeTagIntegrationEvent);
