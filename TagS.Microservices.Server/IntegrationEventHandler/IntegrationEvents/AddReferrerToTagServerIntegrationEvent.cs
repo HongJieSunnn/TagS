@@ -1,8 +1,6 @@
-﻿using TagS.Microservices.Client.Models;
-
-namespace TagS.Microservices.Server.IntegrationEventHandler.IntegrationEvents
+﻿namespace TagS.Microservices.Server.IntegrationEventHandler.IntegrationEvents
 {
-    public record AddReferrerToTagServerIntegrationEvent:IntegrationEvent
+    public record AddReferrerToTagServerIntegrationEvent : IntegrationEvent
     {
         public IReferrer Referrer { get; set; }
         public string TagId { get; set; }

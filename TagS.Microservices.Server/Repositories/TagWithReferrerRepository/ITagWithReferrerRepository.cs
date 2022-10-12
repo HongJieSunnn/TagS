@@ -1,6 +1,4 @@
-﻿using TagS.Microservices.Client.Models;
-
-namespace TagS.Microservices.Server.Repositories.TagWithReferrerRepository
+﻿namespace TagS.Microservices.Server.Repositories.TagWithReferrerRepository
 {
     public interface ITagWithReferrerRepository
     {
