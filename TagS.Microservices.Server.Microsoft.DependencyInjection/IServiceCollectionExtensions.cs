@@ -1,10 +1,6 @@
 ﻿using Innermost.MongoDBContext.Configurations.Builder;
 using Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
-using MongoDB.Driver.GeoJsonObjectModel;
-using TagS.Microservices.Client.Models;
 using TagS.Microservices.Server.Queries.TagQueries;
 using TagS.Microservices.Server.Queries.TagReviewedQueries;
 using TagS.Microservices.Server.Queries.TagWithReferrerQueries;
