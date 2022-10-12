@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
-using TagS.Microservices.Client.Models;
+using TagS.Core.Models;
 using TagS.Microservices.Server.IntegrationEventHandler;
 using TagS.Microservices.Server.IntegrationEventHandler.IntegrationEvents;
 using TagS.Microservices.Server.Models;
