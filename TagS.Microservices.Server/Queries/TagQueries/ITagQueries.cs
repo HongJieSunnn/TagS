@@ -7,5 +7,6 @@
         Task<IEnumerable<TagDTO>> GetNextTagsAsync(string tagId);
         Task<TagDTO> GetTagByPreferredNameAsync(string preferredName);
         Task<TagDTO> GetTagBySynonymAsync(string synonym);
+        Task<IEnumerable<TagDTO>> SearchTagsByNameAsync(string name);
     }
 }
