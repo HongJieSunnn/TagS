@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Authors>HongJie Sun</Authors>
-	  <Version>0.8.2</Version>
+	  <Version>0.8.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

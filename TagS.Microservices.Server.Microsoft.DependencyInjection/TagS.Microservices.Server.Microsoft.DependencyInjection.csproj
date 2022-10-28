@@ -4,14 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <Version>0.8.1</Version>
+	  <Version>0.8.0</Version>
 	  <Authors>HongJie Sun</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Innermost.MongoDBContext.Extensions.Microsoft.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageReference Include="TagS.Microservices.Server" Version="0.8.1" />
+    <PackageReference Include="TagS.Microservices.Server" Version="0.8.0" />
   </ItemGroup>
 
 </Project>
