@@ -30,21 +30,28 @@
 
         public async Task<TagDTO> GetTagByPreferredNameAsync(string preferredName)
         {
-            var tag = await _context.Tags.FindAsync(t=>t.PreferredTagName== preferredName);
-            return MapTagToTagDTO(tag.First());
+            var tag = await _context.Tags.Find(t=>t.PreferredTagName== preferredName).FirstAsync();
+            return MapTagToTagDTO(tag);
         }
 
         public async Task<TagDTO> GetTagBySynonymAsync(string synonym)
         {
             var filter = Builders<Tag>.Filter.Eq("Synonyms", synonym);
-            var tag = await _context.Tags.FindAsync(filter);//Call exception.
-            return MapTagToTagDTO(tag.First());
+            var tag = await _context.Tags.Find(filter).FirstAsync();
+            return MapTagToTagDTO(tag);
+        }
+
+        public async Task<IEnumerable<TagDTO>> SearchTagsByNameAsync(string name)
+        {
+            var fliter = Builders<Tag>.Filter.Regex(t => t.PreferredTagName, $"/{name}/i") | Builders<Tag>.Filter.Eq("Synonyms", $"{name}");
+            var tags = await _context.Tags.Find(fliter).ToListAsync();
+            return tags.Select(t => MapTagToTagDTO(t)).OrderByDescending(t=>t.PreferredTagName.Split(':').Length);
         }
 
         private TagDTO MapTagToTagDTO(Tag tag)
         {
             return new TagDTO(
-                tag.Id, 
+                tag.Id!, 
                 tag.PreferredTagName, 
                 tag.TagDetail, 
                 tag.PreviousTagId, 
