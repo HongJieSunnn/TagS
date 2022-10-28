@@ -1,4 +1,4 @@
-﻿namespace TagS.Microservices.Client.AutofacExtensions
+﻿namespace Autofac
 {
     public static class AutofacContainerBuilderExtensions
     {
