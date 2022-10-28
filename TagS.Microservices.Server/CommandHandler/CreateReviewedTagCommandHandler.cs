@@ -14,7 +14,7 @@ namespace TagS.Microservices.Server.CommandHandler
             if (_tagReviewedRepository.ExistedPreferredName(request.PreferredTagName))
                 return false;
 
-            var reviewedTag = new TagReviewed(request.PreferredTagName, request.TagDetail, request.UserId, request.CreateTime!.Value, request.PreviousTagId,request.Ancestors,request.Synonyms);
+            var reviewedTag = new TagReviewed(request.PreferredTagName, request.TagDetail, request.UserId, request.CreateTime!.Value, request.PreviousTagId, request.Ancestors, request.Synonyms);
             await _tagReviewedRepository.CreateReviewedTagAsync(reviewedTag);
             return true;
         }

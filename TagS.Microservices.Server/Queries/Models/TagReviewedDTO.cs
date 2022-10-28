@@ -9,15 +9,15 @@
         public List<string>? Ancestors { get; init; }
         public string UserId { get; init; }
         public DateTime CreateTime { get; init; }
-        public TagReviewedDTO(string id,string preferredTagName,string tagDetail,string? previousTagId,List<string>? ancestors,string userId,DateTime creteTime)
+        public TagReviewedDTO(string id, string preferredTagName, string tagDetail, string? previousTagId, List<string>? ancestors, string userId, DateTime creteTime)
         {
-            Id=id;
-            PreferredTagName=preferredTagName;
-            TagDetail=tagDetail;
-            PreviousTagId=previousTagId;
+            Id = id;
+            PreferredTagName = preferredTagName;
+            TagDetail = tagDetail;
+            PreviousTagId = previousTagId;
             Ancestors = ancestors;
-            UserId=userId;
-            CreateTime= creteTime;
+            UserId = userId;
+            CreateTime = creteTime;
         }
     }
 }

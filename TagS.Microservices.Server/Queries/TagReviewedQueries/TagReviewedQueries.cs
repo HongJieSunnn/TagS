@@ -9,8 +9,8 @@
         }
         public async Task<IEnumerable<TagReviewedDTO>> GetTobeReviewedTagsAsync()
         {
-            var tags=await _context.TagRevieweds.FindAsync(t=>t.Statue==TagReviewedStatue.ToBeReviewed);
-            return tags.ToList().Select(t=>MapTagReviewedToTagReviewedDTO(t));
+            var tags = await _context.TagRevieweds.FindAsync(t => t.Statue == TagReviewedStatue.ToBeReviewed);
+            return tags.ToList().Select(t => MapTagReviewedToTagReviewedDTO(t));
         }
 
         private TagReviewedDTO MapTagReviewedToTagReviewedDTO(TagReviewed tagReviewed)

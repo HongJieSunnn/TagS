@@ -1,6 +1,6 @@
 ﻿namespace TagS.Microservices.Server.Repositories.TagReviewedRepository
 {
-    public interface ITagReviewedRepository:IRepository<TagReviewed>
+    public interface ITagReviewedRepository : IRepository<TagReviewed>
     {
         bool ExistedPreferredName(string preferredName);
         Task CreateReviewedTagAsync(TagReviewed tagReviewed);

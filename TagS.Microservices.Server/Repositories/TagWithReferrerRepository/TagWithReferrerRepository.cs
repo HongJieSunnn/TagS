@@ -14,7 +14,7 @@
 
         public Task AddAsync(TagWithReferrer tagWithReferrer)
         {
-            return _context.TagWithReferrers.InsertOneAsync(_session,tagWithReferrer);
+            return _context.TagWithReferrers.InsertOneAsync(_session, tagWithReferrer);
         }
 
         public Task<UpdateResult> DeleteAsync(string tagId)
@@ -25,13 +25,13 @@
 
         public Task AddReferrerToTagAsync(string tagId, IReferrer referrer)
         {
-            var updateModel=Builders<TagWithReferrer>.Update.AddToSet(tr=>tr.Referrers,referrer).Set(tr=>tr.UpdateTime, DateTime.Now);
+            var updateModel = Builders<TagWithReferrer>.Update.AddToSet(tr => tr.Referrers, referrer).Set(tr => tr.UpdateTime, DateTime.Now);
             return _context.TagWithReferrers.UpdateOneAsync(_session, t => t.Id == tagId, updateModel);
         }
 
         public Task RemoveReferrerToTagAsync(string tagId, IReferrer referrer)
         {
-            var tagWithReferrer=_context.TagWithReferrers.Find(t => t.Id == tagId).First();
+            var tagWithReferrer = _context.TagWithReferrers.Find(t => t.Id == tagId).First();
             //I have override the Equals methods in ReferrerBase and it's useful in memory.
             //But if we use Update.Pull(tr=>tr.Referrers,referrer) it can work.So we need use the PullFirter.
             //I guess the reason is mongodb uses Id to determine which item to pull.
@@ -44,7 +44,7 @@
 
         public Task<UpdateResult> UpdateAsync(string tagId, UpdateDefinition<TagWithReferrer> updateDefinition, params FilterDefinition<TagWithReferrer>[] filterDefinitions)
         {
-            var filter = CombineFilterDefinitions(Builders<TagWithReferrer>.Filter.Eq(t=>t.Id, tagId), filterDefinitions);
+            var filter = CombineFilterDefinitions(Builders<TagWithReferrer>.Filter.Eq(t => t.Id, tagId), filterDefinitions);
 
             return _context.TagWithReferrers.UpdateOneAsync(_session, filter, updateDefinition);
         }

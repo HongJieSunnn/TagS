@@ -1,6 +1,6 @@
 ﻿namespace TagS.Microservices.Server.DomainEventHandlers
 {
-    public class DeleteTagDomainEventHandler:INotificationHandler<DeleteTagDomainEvent>
+    public class DeleteTagDomainEventHandler : INotificationHandler<DeleteTagDomainEvent>
     {
         private readonly ITagWithReferrerRepository _tagWithReferrerRepository;
         public DeleteTagDomainEventHandler(ITagWithReferrerRepository tagWithReferrerRepository)

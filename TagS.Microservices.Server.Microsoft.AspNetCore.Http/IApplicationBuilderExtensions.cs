@@ -45,7 +45,7 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
         /// <param name="builder"></param>
         /// <param name="indexNames">will create indexKeysDefinitions like Builders<TagWithReferrer>.IndexKeys.Ascending($"Referrers.{indexName}")</param>
         /// <returns></returns>
-        public static IApplicationBuilder AddReferrerIndexes<TReferrer>(this IApplicationBuilder builder,params string[] indexNames)
+        public static IApplicationBuilder AddReferrerIndexes<TReferrer>(this IApplicationBuilder builder, params string[] indexNames)
             where TReferrer : IReferrer
         {
             var context = builder.ApplicationServices.GetRequiredService<TagSMongoDBContext>();
@@ -294,9 +294,9 @@ namespace TagS.Microservices.Server.Microsoft.AspNetCore.Http
             return builder;
         }
 
-        private static IEnumerable<Models.Tag> GetMultiLevelTags(string? id,string preTagId,string preTagName,string[] tagNames,string[] tagDetails,string[] tagAncestors)
+        private static IEnumerable<Models.Tag> GetMultiLevelTags(string? id, string preTagId, string preTagName, string[] tagNames, string[] tagDetails, string[] tagAncestors)
         {
-            var tags= tagNames.Select((tn, i) =>
+            var tags = tagNames.Select((tn, i) =>
             {
                 return new Models.Tag(id, $"{preTagName}:{tn}", tagDetails[i], preTagId, tagAncestors.ToList(), null, null);
             });

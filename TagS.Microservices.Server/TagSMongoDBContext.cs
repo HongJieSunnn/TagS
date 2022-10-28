@@ -20,7 +20,7 @@ namespace TagS.Microservices.Server
         }
 
         public async Task<bool> SaveEntitiesAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
-            where TEntity : Entity<string>,IAggregateRoot
+            where TEntity : Entity<string>, IAggregateRoot
         {
             if (entity.DomainEvents is not null)
             {
@@ -55,7 +55,7 @@ namespace TagS.Microservices.Server
 
         private void CreateIndexesForTagWithReferrers()
         {
-            if(!TagWithReferrers!.Indexes.List().Any())
+            if (!TagWithReferrers!.Indexes.List().Any())
             {
                 var ancestorsIndex = Builders<TagWithReferrer>.IndexKeys.Ascending(t => t.Ancestors);
                 //TagableEntity need not add index for TagSummary,because we can search from TagWithReferrer.
@@ -64,7 +64,7 @@ namespace TagS.Microservices.Server
                 var referrerReferrerIdIndex = Builders<TagWithReferrer>.IndexKeys.Ascending("Referrers.ReferrerId");
                 var referrerNameIndex = Builders<TagWithReferrer>.IndexKeys.Ascending("Referrers.ReferrerName");
 
-                var createIndexModels = new[] { ancestorsIndex, referrerIdIndex,referrerReferrerIdIndex, referrerNameIndex }.Select(i => new CreateIndexModel<TagWithReferrer>(i));
+                var createIndexModels = new[] { ancestorsIndex, referrerIdIndex, referrerReferrerIdIndex, referrerNameIndex }.Select(i => new CreateIndexModel<TagWithReferrer>(i));
                 if (createIndexModels.Any())
                     TagWithReferrers.Indexes.CreateManyAsync(createIndexModels).GetAwaiter().GetResult();
             }
@@ -80,7 +80,7 @@ namespace TagS.Microservices.Server
                 var synonymsIndex = Builders<Tag>.IndexKeys.Ascending("_synonyms");
                 var tagDetailIndex = Builders<Tag>.IndexKeys.Ascending(t => t.TagDetail);
 
-                var createIndexModels = new[] { ancestorsIndex, preIdIndex,nameIndex,synonymsIndex,tagDetailIndex }.Select(i => new CreateIndexModel<Tag>(i));
+                var createIndexModels = new[] { ancestorsIndex, preIdIndex, nameIndex, synonymsIndex, tagDetailIndex }.Select(i => new CreateIndexModel<Tag>(i));
                 if (createIndexModels.Any())
                     Tags.Indexes.CreateManyAsync(createIndexModels).GetAwaiter().GetResult();
             }
@@ -93,7 +93,7 @@ namespace TagS.Microservices.Server
                 var nameIndex = Builders<TagReviewed>.IndexKeys.Ascending(t => t.PreferredTagName);
                 var statueIndex = Builders<TagReviewed>.IndexKeys.Ascending(t => t.Statue);
 
-                var createIndexModels = new[] { nameIndex,statueIndex }.Select(i => new CreateIndexModel<TagReviewed>(i));
+                var createIndexModels = new[] { nameIndex, statueIndex }.Select(i => new CreateIndexModel<TagReviewed>(i));
                 if (createIndexModels.Any())
                     TagRevieweds.Indexes.CreateManyAsync(createIndexModels).GetAwaiter().GetResult();
             }
@@ -104,7 +104,7 @@ namespace TagS.Microservices.Server
             throw new NotImplementedException();
         }
 
-        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default,bool saveChanges=true)
+        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default, bool saveChanges = true)
         {
             throw new NotImplementedException();
         }

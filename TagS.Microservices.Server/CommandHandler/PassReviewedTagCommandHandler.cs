@@ -15,13 +15,13 @@ namespace TagS.Microservices.Server.CommandHandler
             var updateResult = await _tagReviewedRepository.PassReviewedTagAsync(request.ReviewedTagId);
             if (updateResult.result)
             {
-                await _tagReviewedRepository.UnitOfWork.SaveEntitiesAsync(updateResult.entity!,cancellationToken);
+                await _tagReviewedRepository.UnitOfWork.SaveEntitiesAsync(updateResult.entity!, cancellationToken);
             }
             return updateResult.result;
         }
     }
 
-    public class IdempotentPassReviewedTagCommandHandler : IdempotentCommandHandler<PassReviewedTagCommand,bool>
+    public class IdempotentPassReviewedTagCommandHandler : IdempotentCommandHandler<PassReviewedTagCommand, bool>
     {
         public IdempotentPassReviewedTagCommandHandler(IMediator mediator, ICommandRequestRepository commandRequestRepository) : base(mediator, commandRequestRepository)
         {

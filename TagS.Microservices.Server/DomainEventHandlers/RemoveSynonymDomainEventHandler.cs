@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagS.Microservices.Server.DomainEventHandlers
+﻿namespace TagS.Microservices.Server.DomainEventHandlers
 {
     public class RemoveSynonymDomainEventHandler : INotificationHandler<RemoveSynonymDomainEvent>
     {

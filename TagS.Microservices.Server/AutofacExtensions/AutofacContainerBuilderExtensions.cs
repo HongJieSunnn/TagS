@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using CommonService.Behaviors;
+using Innermost.Architecture.Consistency.MongoDB;
 using TagS.Microservices.Server.IntegrationEventHandler;
 
 namespace TagS.Microservices.Server.AutofacExtensions

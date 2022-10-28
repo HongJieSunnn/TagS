@@ -5,7 +5,7 @@
         private readonly ITagWithReferrerRepository _tagWithReferrerRepository;
         public AddSynonymDomainEventHandler(ITagWithReferrerRepository tagWithReferrerRepository)
         {
-            _tagWithReferrerRepository= tagWithReferrerRepository;
+            _tagWithReferrerRepository = tagWithReferrerRepository;
         }
         public async Task Handle(AddSynonymDomainEvent notification, CancellationToken cancellationToken)
         {

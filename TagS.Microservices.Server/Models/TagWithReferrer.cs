@@ -25,12 +25,12 @@
         public DateTime? UpdateTime { get; set; }
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime? DeleteTime { get; set; }
-        public TagWithReferrer(string id, string preferredTagName, string tagDetail, List<string> synonyms, List<IReferrer>? referrers, DateTime createTime,string? previousTagId=null,List<string>? ancestors=null)
+        public TagWithReferrer(string id, string preferredTagName, string tagDetail, List<string> synonyms, List<IReferrer>? referrers, DateTime createTime, string? previousTagId = null, List<string>? ancestors = null)
         {
             Id = id;
             PreferredTagName = preferredTagName;
             TagDetail = tagDetail;
-            PreviousTagId= previousTagId;
+            PreviousTagId = previousTagId;
             Ancestors = ancestors;
             Synonyms = synonyms;
             Referrers = referrers ?? new List<IReferrer>();

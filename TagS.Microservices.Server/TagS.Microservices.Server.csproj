@@ -4,20 +4,21 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Authors>HongJieSun</Authors>
+    <Authors>HongJie Sun</Authors>
+	  <Version>0.8.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.3.0" />
-    <PackageReference Include="Innermost.CommonService" Version="1.0.0" />
     <PackageReference Include="Innermost.DomainSeedWork" Version="1.0.0" />
-    <PackageReference Include="Innermost.EventBusCommon" Version="1.0.0" />
+    <PackageReference Include="Innermost.EventBus.EventBusCommon" Version="1.0.0" />
     <PackageReference Include="Innermost.IdempotentCommand" Version="1.0.0" />
     <PackageReference Include="Innermost.MongoDBContext" Version="1.0.0" />
+    <PackageReference Include="Innermost.Architecture.Consistency.MongoDB" Version="0.8.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.15.1" />
-    <PackageReference Include="TagS.Core" Version="1.0.0" />
+    <PackageReference Include="TagS.Core" Version="0.0.1" />
   </ItemGroup>
 
 </Project>

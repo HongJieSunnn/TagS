@@ -17,7 +17,7 @@ namespace TagS.Microservices.Server.CommandHandler
         }
     }
 
-    public class IdempotentRefuseReviewedTagCommandHandler : IdempotentCommandHandler<RefuseReviewedTagCommand,bool>
+    public class IdempotentRefuseReviewedTagCommandHandler : IdempotentCommandHandler<RefuseReviewedTagCommand, bool>
     {
         public IdempotentRefuseReviewedTagCommandHandler(IMediator mediator, ICommandRequestRepository commandRequestRepository) : base(mediator, commandRequestRepository)
         {

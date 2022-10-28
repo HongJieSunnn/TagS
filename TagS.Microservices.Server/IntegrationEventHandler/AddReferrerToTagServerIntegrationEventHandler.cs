@@ -4,7 +4,7 @@ namespace TagS.Microservices.Server.IntegrationEventHandler
 {
     public class AddReferrerToTagServerIntegrationEventHandler : IIntegrationEventHandler<AddReferrerToTagServerIntegrationEvent>
     {
-        
+
         private readonly ILogger<AddReferrerToTagServerIntegrationEventHandler> _logger;
         private readonly ITagWithReferrerRepository _tagWithReferrerRepository;
         public AddReferrerToTagServerIntegrationEventHandler(ILogger<AddReferrerToTagServerIntegrationEventHandler> logger, ITagWithReferrerRepository tagWithReferrerRepository)
@@ -19,10 +19,10 @@ namespace TagS.Microservices.Server.IntegrationEventHandler
             //However,for convenience,I do here.
             if (@event.Referrer.ReferrerName == "LifeRecord")
             {
-                (@event.Referrer as dynamic).BaiduPOI = 
+                (@event.Referrer as dynamic).BaiduPOI =
                     ((@event.Referrer as dynamic).Longitude is null || (@event.Referrer as dynamic).Latitude is null) ?
-                    null 
-                    : 
+                    null
+                    :
                     new GeoJsonPoint<GeoJson2DGeographicCoordinates>(new GeoJson2DGeographicCoordinates((@event.Referrer as dynamic).Longitude, (@event.Referrer as dynamic).Latitude));
             }
 
