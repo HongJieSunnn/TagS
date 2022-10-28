@@ -4,16 +4,17 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.0.1</Version>
+    <Version>0.8.1</Version>
+	  <Authors>HongJie Sun</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.3.0" />
     <PackageReference Include="Innermost.DomainSeedWork" Version="1.0.0" />
-    <PackageReference Include="Innermost.EventBusCommon" Version="1.0.0" />
+    <PackageReference Include="Innermost.EventBus.EventBusCommon" Version="1.0.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
-    <PackageReference Include="TagS.Core" Version="1.0.0" />
+    <PackageReference Include="TagS.Core" Version="0.0.1" />
   </ItemGroup>
 
 </Project>
